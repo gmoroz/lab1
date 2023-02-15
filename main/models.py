@@ -12,6 +12,7 @@ class Team(models.Model):
     tituls = models.ManyToManyField("Titul")
     coach = models.CharField(max_length=255)
     points = models.PositiveIntegerField()
+    games_count = models.PositiveIntegerField()
 
 
 class Calendar(models.Model):
