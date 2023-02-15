@@ -54,6 +54,15 @@ class TeamViewSet(ModelViewSet):
         return render(request, "team.html", {"team": instance, "all_titles": titles})
 
 
+class TeamFormViewForCreate(TemplateView):
+    template_name = "team_create.html"
+
+    def get_context_data(self, **kwargs: Any) -> dict[str, Any]:
+        context = super().get_context_data(**kwargs)
+        context["titles"] = Title.objects.all()
+        return context
+
+
 class TitleViewSet(ModelViewSet):
     queryset = Title.objects.all()
     serializer_class = TitleSerializer
