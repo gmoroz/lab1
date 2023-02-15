@@ -1,0 +1,68 @@
+[
+  {
+    "model": "main.team",
+    "pk": 1,
+    "fields": {
+      "name": "Real Madrid",
+      "country": "Spain",
+      "city": "Madrid",
+      "coach": "Zinedine Zidane",
+      "tituls": [1, 2, 3, 4]
+    }
+  },
+  {
+    "model": "main.team",
+    "pk": 2,
+    "fields": {
+      "name": "Liverpool",
+      "country": "England",
+      "city": "Liverpool",
+      "coach": "Jürgen Klopp",
+      "tituls": [2, 3, 4, 5, 6]
+    }
+  },
+  {
+    "model": "main.team",
+    "pk": 3,
+    "fields": {
+      "name": "Barcelona",
+      "country": "Spain",
+      "city": "Barcelona",
+      "coach": "Ronald Koeman",
+      "tituls": [1, 2, 4, 5]
+    }
+  },
+  {
+    "model": "main.team",
+    "pk": 4,
+    "fields": {
+      "name": "Paris Saint-Germain",
+      "country": "France",
+      "city": "Paris",
+      "coach": "Mauricio Pochettino",
+      "tituls": [1, 3, 5]
+    }
+  },
+  {
+    "model": "main.team",
+    "pk": 5,
+    "fields": {
+      "name": "Manchester United",
+      "country": "England",
+      "city": "Manchester",
+      "coach": "Ole Gunnar Solskjær",
+      "tituls": [1, 3, 5]
+    }
+  },
+  {
+    "model": "main.team",
+    "pk": 6,
+    "fields": {
+      "name": "Bayern Munich",
+      "country": "Germany",
+      "city": "Munich",
+      "coach": "Julian Nagelsmann",
+      "tituls": [1, 2, 4]
+    }
+  }
+]
