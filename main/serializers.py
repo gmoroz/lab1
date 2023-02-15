@@ -6,16 +6,16 @@ from .models import Calendar, Team, Titul
 class TitulSerializer(serializers.ModelSerializer):
     class Meta:
         model = Titul
-        exclude = ("pk",)
+        fields = "__all__"
 
 
 class TeamSerializer(serializers.ModelSerializer):
     class Meta:
         model = Team
-        exclude = ("pk",)
+        fields = "__all__"
 
 
 class CalendarSerializer(serializers.ModelSerializer):
     class Meta:
         model = Calendar
-        exclude = ("pk",)
+        fields = "__all__"
