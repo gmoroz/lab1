@@ -9,13 +9,13 @@ class Team(models.Model):
     name = models.CharField(max_length=255)
     country = models.CharField(max_length=255)
     city = models.CharField(max_length=255)
-    tituls = models.ForeignKey("Titul", on_delete=models.CASCADE)
+    tituls = models.ManyToManyField("Titul")
     coach = models.CharField(max_length=255)
 
 
 class Calendar(models.Model):
     date_of_the_match = models.DateField()
-    teams = models.ForeignKey("Team", on_delete=models.CASCADE)
+    teams = models.ManyToManyField("Team")
     main_judge = models.CharField(max_length=100)
     result = models.CharField(max_length=5, null=True, default=None)
 
