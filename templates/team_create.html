@@ -1,0 +1,45 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Команда</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/team.css' %}" />
+    <script src="{% static 'js/team_create.js' %}"></script>
+  </head>
+  <body>
+    <h1>Создать новую команду</h1>
+    <form id="team-form">
+      <label for="name">Название команды:</label>
+      <input type="text" id="name" name="name" /><br />
+
+      <label for="country">Страна:</label>
+      <input type="text" id="country" name="country" /><br />
+
+      <label for="city">Город:</label>
+      <input type="text" id="city" name="city" /><br />
+
+      <label for="coach">Тренер:</label>
+      <input type="text" id="coach" name="coach" /><br />
+
+      <label for="points">Очки:</label>
+      <input type="number" id="points" name="points" /><br />
+
+      <label for="games-count">Количество игр:</label>
+      <input type="number" id="games-count" name="games_count" /><br />
+
+      <label for="titles">Титулы:</label>
+      <div id="titles-container">
+        {% for title in titles %}
+        <label>
+          <input type="checkbox" name="titles" value="{{ title.pk }}" />
+          {{ title.name }}
+        </label>
+        <br />
+        {% endfor %}
+      </div>
+      <br />
+
+      <input type="submit" value="Сохранить" />
+    </form>
+  </body>
+</html>
