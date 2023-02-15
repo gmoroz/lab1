@@ -17,7 +17,7 @@ class Calendar(models.Model):
     date_of_the_match = models.DateField()
     teams = models.ForeignKey("Team", on_delete=models.CASCADE)
     main_judge = models.CharField(max_length=100)
-    result = models.CharField(max_length=5)
+    result = models.CharField(max_length=5, null=True, default=None)
 
 
 # Команда название, страна, город, титулы, тренер.
