@@ -2,7 +2,7 @@ from typing import Any
 
 from django.views.generic import TemplateView
 
-from .models import Calendar
+from .models import Calendar, Team
 
 
 class GamesView(TemplateView):
@@ -21,4 +21,15 @@ class GamesView(TemplateView):
             games_qs = games_qs.filter(teams__name__iexact=team)
 
         context["games"] = games_qs
+        return context
+
+
+class TeamsView(TemplateView):
+    template_name = "tournament_table.html"
+
+    def get_context_data(self, **kwargs: Any) -> dict[str, Any]:
+        context = super().get_context_data(**kwargs)
+        context["teams"] = Team.objects.values(
+            "name", "games_count", "points",
+        ).order_by("-points")
         return context
