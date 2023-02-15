@@ -2,10 +2,10 @@ from typing import Any
 
 from django.shortcuts import render
 from django.views.generic import TemplateView
-from rest_framework import generics
-from rest_framework.renderers import TemplateHTMLRenderer
+from rest_framework.viewsets import ModelViewSet
 
 from .models import Calendar, Team
+from .serializers import TeamSerializer
 
 
 class GamesView(TemplateView):
@@ -27,7 +27,7 @@ class GamesView(TemplateView):
         return context
 
 
-class TeamsView(TemplateView):
+class TournamentView(TemplateView):
     template_name = "tournament_table.html"
 
     def get_context_data(self, **kwargs: Any) -> dict[str, Any]:
@@ -40,9 +40,14 @@ class TeamsView(TemplateView):
         return context
 
 
-class TeamListView(generics.ListAPIView):
+class TeamViewSet(ModelViewSet):
     queryset = Team.objects.all()
-    renderer_classes = (TemplateHTMLRenderer,)
+    serializer_class = TeamSerializer
 
     def list(self, request, *args, **kwargs):
-        return render(request, "teams.html", {"teams": self.queryset.all()})
+        queryset = self.get_queryset()
+        return render(request, "teams.html", {"teams": queryset})
+
+    def retrieve(self, request, *args, **kwargs):
+        instance = self.get_object()
+        return render(request, "team.html", {"team": instance})

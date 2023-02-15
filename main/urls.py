@@ -1,9 +1,15 @@
 from django.urls import path
+from rest_framework.routers import SimpleRouter
 
-from .views import GamesView, TeamListView, TeamsView
+from .views import GamesView, TeamViewSet, TournamentView
+
+router = SimpleRouter()
+router.register("teams", TeamViewSet, basename="teams")
+
 
 urlpatterns = [
     path("games/", GamesView.as_view(), name="games"),
-    path("table/", TeamsView.as_view(), name="table"),
-    path("teams/", TeamListView.as_view(), name="teams"),
+    path("table/", TournamentView.as_view(), name="table"),
 ]
+
+urlpatterns += router.urls
