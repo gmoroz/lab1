@@ -11,6 +11,7 @@ django = "^4.1.7"
 pre-commit = "^3.0.4"
 python-dotenv = "^0.21.1"
 psycopg2-binary = "^2.9.5"
+django-extensions = "^3.2.1"
 
 
 [tool.poetry.group.dev.dependencies]
