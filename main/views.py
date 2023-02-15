@@ -1,6 +1,9 @@
 from typing import Any
 
+from django.shortcuts import render
 from django.views.generic import TemplateView
+from rest_framework import generics
+from rest_framework.renderers import TemplateHTMLRenderer
 
 from .models import Calendar, Team
 
@@ -30,6 +33,16 @@ class TeamsView(TemplateView):
     def get_context_data(self, **kwargs: Any) -> dict[str, Any]:
         context = super().get_context_data(**kwargs)
         context["teams"] = Team.objects.values(
-            "name", "games_count", "points",
+            "name",
+            "games_count",
+            "points",
         ).order_by("-points")
         return context
+
+
+class TeamListView(generics.ListAPIView):
+    queryset = Team.objects.all()
+    renderer_classes = (TemplateHTMLRenderer,)
+
+    def list(self, request, *args, **kwargs):
+        return render(request, "teams.html", {"teams": self.queryset.all()})
