@@ -50,7 +50,8 @@ class TeamViewSet(ModelViewSet):
 
     def retrieve(self, request, *args, **kwargs):
         instance = self.get_object()
-        return render(request, "team.html", {"team": instance})
+        tituls = Titul.objects.all()
+        return render(request, "team.html", {"team": instance, "all_tituls": tituls})
 
 
 class TitulViewSet(ModelViewSet):
