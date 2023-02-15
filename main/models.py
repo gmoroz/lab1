@@ -11,6 +11,7 @@ class Team(models.Model):
     city = models.CharField(max_length=255)
     tituls = models.ManyToManyField("Titul")
     coach = models.CharField(max_length=255)
+    points = models.PositiveIntegerField()
 
 
 class Calendar(models.Model):
