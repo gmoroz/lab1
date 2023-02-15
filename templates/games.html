@@ -28,8 +28,8 @@
           {% for game in games %}
           <tr>
             <td>{{ game.date_of_the_match }}</td>
-            <td>{{ game.team1_name }}</td>
-            <td>{{ game.team2_name }}</td>
+            <td>{{ game.teams.all.0.name }}</td>
+            <td>{{ game.teams.all.1.name }}</td>
             <td>{{ game.main_judge }}</td>
             <td>{{ game.result|default_if_none:"-" }}</td>
           </tr>

@@ -15,5 +15,10 @@ class GamesView(TemplateView):
             "date_of_the_match",
         )
 
+        if judge := self.request.GET.get("judge"):
+            games_qs = games_qs.filter(main_judge__iexact=judge)
+        if team := self.request.GET.get("team"):
+            games_qs = games_qs.filter(teams__name__iexact=team)
+
         context["games"] = games_qs
         return context
