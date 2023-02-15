@@ -8,7 +8,7 @@
   </head>
   <body>
     <h1>Создать новую команду</h1>
-    <form id="team-form">
+    <form id="team-form" action="/teams/" method="POST">
       <label for="name">Название команды:</label>
       <input type="text" id="name" name="name" /><br />
 
@@ -39,7 +39,7 @@
       </div>
       <br />
 
-      <input type="submit" value="Сохранить" />
+      <input type="submit" value="Создать команду" />
     </form>
   </body>
 </html>
