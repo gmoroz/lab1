@@ -45,16 +45,16 @@ input[type="submit"]:hover {
   background-color: #45a049;
 }
 
-#tituls-container {
+#titles-container {
   margin-bottom: 20px;
 }
 
-#tituls-container label {
+#titles-container label {
   display: inline-block;
   margin-right: 10px;
   margin-bottom: 10px;
 }
 
-#tituls-container input[type="checkbox"] {
+#titles-container input[type="checkbox"] {
   margin-right: 5px;
 }

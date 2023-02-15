@@ -7,52 +7,60 @@ class Migration(migrations.Migration):
 
     initial = True
 
-    dependencies = [
-    ]
+    dependencies = []
 
     operations = [
         migrations.CreateModel(
-            name='Titul',
+            name="Title",
             fields=[
                 (
-                    'id', models.BigAutoField(
+                    "id",
+                    models.BigAutoField(
                         auto_created=True,
-                        primary_key=True, serialize=False, verbose_name='ID',
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
                     ),
                 ),
-                ('name', models.CharField(max_length=255)),
+                ("name", models.CharField(max_length=255)),
             ],
         ),
         migrations.CreateModel(
-            name='Team',
+            name="Team",
             fields=[
                 (
-                    'id', models.BigAutoField(
+                    "id",
+                    models.BigAutoField(
                         auto_created=True,
-                        primary_key=True, serialize=False, verbose_name='ID',
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
                     ),
                 ),
-                ('name', models.CharField(max_length=255)),
-                ('country', models.CharField(max_length=255)),
-                ('city', models.CharField(max_length=255)),
-                ('coach', models.CharField(max_length=255)),
-                ('points', models.PositiveIntegerField()),
-                ('tituls', models.ManyToManyField(to='main.titul')),
+                ("name", models.CharField(max_length=255)),
+                ("country", models.CharField(max_length=255)),
+                ("city", models.CharField(max_length=255)),
+                ("coach", models.CharField(max_length=255)),
+                ("points", models.PositiveIntegerField()),
+                ("titles", models.ManyToManyField(to="main.title")),
             ],
         ),
         migrations.CreateModel(
-            name='Calendar',
+            name="Calendar",
             fields=[
                 (
-                    'id', models.BigAutoField(
+                    "id",
+                    models.BigAutoField(
                         auto_created=True,
-                        primary_key=True, serialize=False, verbose_name='ID',
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
                     ),
                 ),
-                ('date_of_the_match', models.DateField()),
-                ('main_judge', models.CharField(max_length=100)),
-                ('result', models.CharField(default=None, max_length=5, null=True)),
-                ('teams', models.ManyToManyField(to='main.team')),
+                ("date_of_the_match", models.DateField()),
+                ("main_judge", models.CharField(max_length=100)),
+                ("result", models.CharField(default=None, max_length=5, null=True)),
+                ("teams", models.ManyToManyField(to="main.team")),
             ],
         ),
     ]

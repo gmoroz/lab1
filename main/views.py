@@ -4,8 +4,8 @@ from django.shortcuts import render
 from django.views.generic import TemplateView
 from rest_framework.viewsets import ModelViewSet
 
-from .models import Calendar, Team, Titul
-from .serializers import TeamSerializer, TitulSerializer
+from .models import Calendar, Team, Title
+from .serializers import TeamSerializer, TitleSerializer
 
 
 class GamesView(TemplateView):
@@ -50,10 +50,10 @@ class TeamViewSet(ModelViewSet):
 
     def retrieve(self, request, *args, **kwargs):
         instance = self.get_object()
-        tituls = Titul.objects.all()
-        return render(request, "team.html", {"team": instance, "all_tituls": tituls})
+        titles = Title.objects.all()
+        return render(request, "team.html", {"team": instance, "all_titles": titles})
 
 
-class TitulViewSet(ModelViewSet):
-    queryset = Titul.objects.all()
-    serializer_class = TitulSerializer
+class TitleViewSet(ModelViewSet):
+    queryset = Title.objects.all()
+    serializer_class = TitleSerializer

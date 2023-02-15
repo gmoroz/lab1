@@ -1,19 +1,19 @@
 [
-  { "model": "main.titul", "pk": 1, "fields": { "name": "Champion" } },
-  { "model": "main.titul", "pk": 2, "fields": { "name": "Cup winner" } },
+  { "model": "main.title", "pk": 1, "fields": { "name": "Champion" } },
+  { "model": "main.title", "pk": 2, "fields": { "name": "Cup winner" } },
   {
-    "model": "main.titul",
+    "model": "main.title",
     "pk": 3,
     "fields": { "name": "Super Cup winner" }
   },
   {
-    "model": "main.titul",
+    "model": "main.title",
     "pk": 4,
     "fields": { "name": "League champion" }
   },
-  { "model": "main.titul", "pk": 5, "fields": { "name": "Top scorer" } },
+  { "model": "main.title", "pk": 5, "fields": { "name": "Top scorer" } },
   {
-    "model": "main.titul",
+    "model": "main.title",
     "pk": 6,
     "fields": { "name": "Player of the year" }
   }

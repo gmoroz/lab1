@@ -1,11 +1,11 @@
 from rest_framework import serializers
 
-from .models import Calendar, Team, Titul
+from .models import Calendar, Team, Title
 
 
-class TitulSerializer(serializers.ModelSerializer):
+class TitleSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Titul
+        model = Title
         fields = "__all__"
 
 

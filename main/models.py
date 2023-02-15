@@ -1,7 +1,7 @@
 from django.db import models
 
 
-class Titul(models.Model):
+class Title(models.Model):
     name = models.CharField(max_length=255)
 
 
@@ -9,7 +9,7 @@ class Team(models.Model):
     name = models.CharField(max_length=255)
     country = models.CharField(max_length=255)
     city = models.CharField(max_length=255)
-    tituls = models.ManyToManyField("Titul")
+    titles = models.ManyToManyField("Title")
     coach = models.CharField(max_length=255)
     points = models.PositiveIntegerField()
     games_count = models.PositiveIntegerField()
