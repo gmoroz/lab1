@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Список команд</title>
+    <style>
+      table {
+        border-collapse: collapse;
+        width: 100%;
+      }
+
+      th,
+      td {
+        text-align: left;
+        padding: 8px;
+        border: 1px solid #ddd;
+      }
+
+      th {
+        background-color: #f2f2f2;
+      }
+
+      button {
+        padding: 5px 10px;
+        font-size: 14px;
+        border-radius: 5px;
+        cursor: pointer;
+      }
+
+      .delete-btn {
+        background-color: #f44336;
+        color: white;
+        margin-right: 10px;
+      }
+
+      .delete-btn:hover {
+        background-color: #d32f2f;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Список команд</h1>
+    <table>
+      <thead>
+        <tr>
+          <th>Название команды</th>
+          <th>Действия</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for team in teams %}
+        <tr>
+          <td>{{ team.name }}</td>
+          <td>
+            <a href="{% url 'teams-detail' team.id %}">
+              <button>Подробнее</button>
+            </a>
+            <button class="delete-btn" onclick="confirmDelete('{{ team.id }}')">
+              Удалить
+            </button>
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+
+    <script>
+      function confirmDelete(teamId) {
+        if (confirm("Вы точно хотите удалить эту команду?")) {
+          fetch(`/teams/${teamId}`, {
+            method: "DELETE",
+          }).then((response) => {
+            if (response.ok) {
+              window.location.reload();
+            }
+          });
+        }
+      }
+    </script>
+  </body>
+</html>
