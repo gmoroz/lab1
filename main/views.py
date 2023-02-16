@@ -1,6 +1,6 @@
 from typing import Any
 
-from django.shortcuts import render
+from django.shortcuts import redirect, render
 from django.views.generic import TemplateView
 from rest_framework.viewsets import ModelViewSet
 
@@ -52,6 +52,10 @@ class TeamViewSet(ModelViewSet):
         instance = self.get_object()
         titles = Title.objects.all()
         return render(request, "team.html", {"team": instance, "all_titles": titles})
+
+    def create(self, request, *args, **kwargs):
+        super().create(request, *args, **kwargs)
+        return redirect("/teams/")
 
 
 class TeamFormViewForCreate(TemplateView):
