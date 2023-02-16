@@ -1,41 +1,44 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <title>Матчи</title>
-    <link
-      rel="stylesheet"
-      href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
-    />
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <title>Список матчей</title>
+    <link rel="stylesheet" href="{% static 'css/games.css' %}" />
   </head>
   <body>
-    <div class="container my-5">
-      <h1 class="mb-3">Матчи</h1>
-      <table class="table">
-        <thead>
-          <tr>
-            <th>Дата матча</th>
-            <th>Команда 1</th>
-            <th>Команда 2</th>
-            <th>Главный судья</th>
-            <th>Результат</th>
-          </tr>
-        </thead>
-        <tbody>
-          {% for game in games %}
-          <tr>
-            <td>{{ game.date_of_the_match }}</td>
-            <td>{{ game.teams.all.0.name }}</td>
-            <td>{{ game.teams.all.1.name }}</td>
-            <td>{{ game.main_judge }}</td>
-            <td>{{ game.result|default_if_none:"-" }}</td>
-          </tr>
-          {% endfor %}
-        </tbody>
-      </table>
-    </div>
+    <h1>Список матчей</h1>
+    <table>
+      <thead>
+        <tr>
+          <th>Дата матча</th>
+          <th>Команда 1</th>
+          <th>Команда 2</th>
+          <th>Главный судья</th>
+          <th>Результат</th>
+          <th>Действия</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for game in games %}
+        <tr>
+          <td>{{ game.date_of_the_match }}</td>
+          <td>{{ game.teams.all.0.name }}</td>
+          <td>{{ game.teams.all.1.name }}</td>
+          <td>{{ game.main_judge }}</td>
+          <td>{{ game.result|default_if_none:"-" }}</td>
+          <td>
+            <button class="details-button" data-game-id="{{ game.id }}">
+              Подробнее
+            </button>
+            <button class="delete-button" data-game-id="{{ game.id }}">
+              Удалить
+            </button>
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+    <script src="{% static 'js/games.js' %}"></script>
   </body>
 </html>
