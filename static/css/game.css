@@ -1,0 +1,87 @@
+/* Стиль для всего документа */
+body {
+  background-color: #000;
+  color: #fff;
+  font-family: 'Roboto Mono', monospace;
+  font-size: 16px;
+}
+
+/* Стиль для заголовка */
+.title {
+  text-align: center;
+  margin-top: 60px;
+  font-size: 48px;
+  text-transform: uppercase;
+  letter-spacing: 10px;
+  text-shadow: 2px 2px #00ff00, -2px -2px #ff00ff;
+}
+
+/* Стиль для контейнера формы */
+.grid-container {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  grid-gap: 10px;
+  margin: 0 auto;
+  max-width: 1200px;
+}
+
+/* Стиль для формы */
+form {
+  grid-column: 3 / span 8;
+  background-color: rgba(0, 255, 0, 0.5);
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 0 10px #00ff00;
+}
+
+/* Стиль для лейблов формы */
+label {
+  display: block;
+  margin-bottom: 10px;
+  font-size: 24px;
+  font-weight: bold;
+}
+
+/* Стиль для инпутов формы */
+input, select {
+  display: block;
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 20px;
+  font-size: 20px;
+  background-color: rgba(0, 0, 0, 0.5);
+  border: none;
+  border-radius: 5px;
+  color: #fff;
+  box-shadow: 0 0 5px #00ff00;
+}
+
+/* Стиль для кнопки формы */
+#save-btn {
+  display: block;
+  margin: 20px auto 0;
+  padding: 10px 20px;
+  font-size: 24px;
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 5px;
+  background-color: #00ff00;
+  border: none;
+  border-radius: 5px;
+  color: #000;
+  box-shadow: 0 0 5px #00ff00;
+}
+
+/* Стиль для опций селекта формы */
+option {
+  background-color: rgba(0, 0, 0, 0.5);
+  border: none;
+  border-radius: 5px;
+  color: #fff;
+  box-shadow: 0 0 5px #00ff00;
+}
+body {
+  background-image: url("/static/images/game_bg.jpeg");
+  background-repeat: no-repeat;
+  background-size: cover;
+}

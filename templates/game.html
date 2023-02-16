@@ -1,0 +1,64 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Подробная информация о матче</title>
+    <link rel="stylesheet" href="{% static 'css/game.css' %}" />
+    <link
+      href="https://fonts.googleapis.com/css?family=Roboto+Mono"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <div class="grid-container">
+      <h1 class="title">Подробная информация о матче</h1>
+      <form id="game-form">
+        <label for="date_of_the_match">Дата матча:</label>
+        <input
+          type="date"
+          id="date_of_the_match"
+          name="date_of_the_match"
+          value="{% if game.date_of_the_match %}{{ game.date_of_the_match|date:'Y-m-d' }}{% endif %}"
+        />
+
+        <label for="main_judge">Главный судья:</label>
+        <input
+          type="text"
+          id="main_judge"
+          name="main_judge"
+          value="{{ game.main_judge|default:'' }}"
+        />
+        <label for="team1">Команда 1:</label>
+        <select id="team1" name="team1">
+          {% for team in teams %} {% if game.teams.all.0.id == team.id %}
+          <option value="{{ team.id }}" selected>{{ team.name }}</option>
+          {% else %}
+          <option value="{{ team.id }}">{{ team.name }}</option>
+          {% endif %} {% endfor %}
+        </select>
+
+        <label for="team2">Команда 2:</label>
+        <select id="team2" name="team2">
+          {% for team in teams %} {% if game.teams.all.1.id == team.id %}
+          <option value="{{ team.id }}" selected>{{ team.name }}</option>
+          {% else %}
+          <option value="{{ team.id }}">{{ team.name }}</option>
+          {% endif %} {% endfor %}
+        </select>
+
+        <label for="result">Результат:</label>
+        <input
+          type="text"
+          id="result"
+          name="result"
+          value="{{ game.result|default:'' }}"
+        />
+        <button type="submit" id="save-btn">Сохранить</button>
+      </form>
+    </div>
+    <script src="{% static 'js/game.js' %}"></script>
+  </body>
+</html>
