@@ -1,0 +1,23 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Меню</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/main.css' %}" />
+  </head>
+  <body>
+    <div class="container">
+      <h1>Меню</h1>
+      <div class="buttons">
+        <a href="/titles/" class="title-btn">Все титулы</a>
+        <a href="/titles/create/" class="title-btn">Создать титул</a>
+        <a href="/teams/" class="team-btn">Все команды</a>
+        <a href="/teams/create/" class="team-btn">Создать команду</a>
+        <a href="/games/" class="game-btn">Все матчи</a>
+        <a href="/games/create/" class="game-btn">Создать матч</a>
+        <a href="/table/" class="table-btn">Турнирная таблица</a>
+      </div>
+    </div>
+  </body>
+</html>
