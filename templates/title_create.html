@@ -1,0 +1,22 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Создание титула</title>
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="{% static 'css/title.css' %}"
+    />
+  </head>
+  <body>
+    <div class="container">
+      <h1>Создание титула</h1>
+      <form id="title-form" action="/titles/" method="POST">
+        <label for="name">Название:</label>
+        <input type="text" id="name" name="name" />
+        <input type="submit" value="Сохранить" />
+      </form>
+    </div>
+  </body>
+</html>

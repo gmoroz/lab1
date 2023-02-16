@@ -1,4 +1,5 @@
 from django.urls import path
+from django.views.generic import TemplateView
 from rest_framework.routers import SimpleRouter
 
 from .views import (
@@ -21,6 +22,11 @@ urlpatterns = [
         "teams/create/",
         TeamFormViewForCreate.as_view(),
         name="teams-create",
+    ),
+    path(
+        "titles/create/",
+        TemplateView.as_view(template_name="title_create.html"),
+        name="titles-create",
     ),
 ]
 
