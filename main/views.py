@@ -30,7 +30,8 @@ class GameViewSet(ModelViewSet):
 
     def retrieve(self, request, *args, **kwargs):
         instance = self.get_object()
-        return render(request, "game.html", {"game": instance})
+        teams = Team.objects.all()
+        return render(request, "game.html", {"game": instance, "teams": teams})
 
     def create(self, request, *args, **kwargs):
         super().create(request, *args, **kwargs)
