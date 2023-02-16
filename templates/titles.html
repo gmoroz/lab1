@@ -1,0 +1,41 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Список титулов</title>
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="{% static 'css/styles.css' %}"
+    />
+  </head>
+  <body>
+    <h1>Список титулов</h1>
+    <table>
+      <thead>
+        <tr>
+          <th>Название титула</th>
+          <th>Действия</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for title in titles %}
+        <tr>
+          <td>{{ title.name }}</td>
+          <td>
+            <a class="button" href="/titles/{{ title.id }}">Подробнее</a>
+            <button class="button delete-button" data-title-id="{{ title.id }}">
+              Удалить
+            </button>
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+
+    <script src="{% static 'js/jquery-3.6.0.min.js' %}"></script>
+    <script src="{% static 'js/title_list.js' %}"></script>
+  </body>
+</html>
