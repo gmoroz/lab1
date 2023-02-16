@@ -5,26 +5,36 @@ from django.views.generic import TemplateView
 from rest_framework.viewsets import ModelViewSet
 
 from .models import Calendar, Team, Title
-from .serializers import TeamSerializer, TitleSerializer
+from .serializers import CalendarSerializer, TeamSerializer, TitleSerializer
 
 
-class GamesView(TemplateView):
-    template_name = "games.html"
-
-    def get_context_data(self, **kwargs: Any) -> dict[str, Any]:
-        context = super().get_context_data(**kwargs)
-
-        games_qs = Calendar.objects.prefetch_related("teams").order_by(
+class GameViewSet(ModelViewSet):
+    queryset = (
+        Calendar.objects.all()
+        .prefetch_related("teams")
+        .order_by(
             "date_of_the_match",
         )
+    )
+    serializer_class = CalendarSerializer
+
+    def list(self, request, *args, **kwargs):
+        queryset = self.get_queryset()
 
         if judge := self.request.GET.get("judge"):
-            games_qs = games_qs.filter(main_judge__iexact=judge)
+            queryset = queryset.filter(main_judge__iexact=judge)
         if team := self.request.GET.get("team"):
-            games_qs = games_qs.filter(teams__name__iexact=team)
+            queryset = queryset.filter(teams__name__iexact=team)
 
-        context["games"] = games_qs
-        return context
+        return render(request, "games.html", {"games": queryset})
+
+    def retrieve(self, request, *args, **kwargs):
+        instance = self.get_object()
+        return render(request, "game.html", {"game": instance})
+
+    def create(self, request, *args, **kwargs):
+        super().create(request, *args, **kwargs)
+        return redirect("/games/")
 
 
 class TournamentView(TemplateView):
