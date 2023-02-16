@@ -25,7 +25,7 @@ urlpatterns = [
     ),
     path(
         "titles/create/",
-        TemplateView.as_view(template_name="title_create.html"),
+        TemplateView.as_view(template_name="titles/title_create.html"),
         name="titles-create",
     ),
     path("games/create/", GameFormViewForCreate.as_view(), name="game-create"),
