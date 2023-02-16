@@ -78,6 +78,15 @@ class TeamFormViewForCreate(TemplateView):
         return context
 
 
+class GameFormViewForCreate(TemplateView):
+    template_name = "game_create.html"
+
+    def get_context_data(self, **kwargs: Any) -> dict[str, Any]:
+        context = super().get_context_data(**kwargs)
+        context["teams"] = Team.objects.all()
+        return context
+
+
 class TitleViewSet(ModelViewSet):
     queryset = Title.objects.all()
     serializer_class = TitleSerializer

@@ -3,6 +3,7 @@ from django.views.generic import TemplateView
 from rest_framework.routers import SimpleRouter
 
 from .views import (
+    GameFormViewForCreate,
     GameViewSet,
     TeamFormViewForCreate,
     TeamViewSet,
@@ -27,6 +28,7 @@ urlpatterns = [
         TemplateView.as_view(template_name="title_create.html"),
         name="titles-create",
     ),
+    path("games/create/", GameFormViewForCreate.as_view(), name="game-create"),
 ]
 
 urlpatterns += router.urls
