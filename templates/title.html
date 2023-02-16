@@ -1,0 +1,30 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Информация о титуле</title>
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="{% static 'css/title.css' %}"
+    />
+    <script src="{% static 'js/title.js' %}"></script>
+  </head>
+  <body>
+    <div class="container">
+      <h1>Информация о титуле</h1>
+      <form id="title-form">
+        <label for="name">Название:</label>
+        <input type="text" id="name" name="name" value="{{ title.name }}" />
+        <br />
+        <input
+          type="hidden"
+          id="title-id"
+          name="title_id"
+          value="{{ title.pk }}"
+        />
+        <input type="submit" value="Сохранить" />
+      </form>
+    </div>
+  </body>
+</html>
