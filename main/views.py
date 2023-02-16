@@ -70,3 +70,15 @@ class TeamFormViewForCreate(TemplateView):
 class TitleViewSet(ModelViewSet):
     queryset = Title.objects.all()
     serializer_class = TitleSerializer
+
+    def list(self, request, *args, **kwargs):
+        queryset = self.get_queryset()
+        return render(request, "titles.html", {"titles": queryset})
+
+    def retrieve(self, request, *args, **kwargs):
+        instance = self.get_object()
+        return render(request, "title.html", {"title": instance})
+
+    def create(self, request, *args, **kwargs):
+        super().create(request, *args, **kwargs)
+        return redirect("/titles/")
