@@ -23,5 +23,6 @@ urlpatterns = [
     path("", TemplateView.as_view(template_name="main.html"), name="main"),
     path("admin/", admin.site.urls),
     path("", include("main.urls")),
+    path("", include("users.urls")),
 ]
 urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
