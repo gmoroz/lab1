@@ -10,10 +10,12 @@ def login_view(request):
         user = authenticate(request, username=username, password=password)
         if user is not None:
             login(request, user)
-            return redirect("home")
+            return redirect("main")
         else:
             return render(
-                request, "login.html", {
+                request,
+                "login.html",
+                {
                     "error": "Неправильный логин или пароль.",
                 },
             )
@@ -36,10 +38,7 @@ def register_view(request):
             error = "Пароли не совпадают"
             return render(request, "register.html", {"error": error})
 
-        user = User.objects.create_user(username, password=password)
-
-        user = authenticate(username=username, password=password)
-        login(request, user)
-        return redirect("main")
+        User.objects.create_user(username, password=password)
+        return redirect("login")
 
     return render(request, "register.html")
