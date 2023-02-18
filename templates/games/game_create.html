@@ -1,7 +1,6 @@
 {% extends 'base.html' %} {% load static %}
-{% block title %}
-Создать матч
-{% endblock %} {% block styles %} {{ block.super }}
+{% block title %}Создать матч {% endblock %}
+{% block styles %}{{ block.super }}
 <link rel="stylesheet" href="{% static 'css/game_create.css' %}" />
 {% endblock %} {% block content %}
 <div class="form-container">
@@ -21,6 +20,15 @@
       </select>
     </div>
     <div class="form-group">
+      <label for="team2-input">Команда 2</label>
+      <select id="team2-input" name="team2" required>
+        <option value="">Выберите команду</option>
+        {% for team in teams %}
+        <option value="{{ team.id }}">{{ team.name }}</option>
+        {% endfor %}
+      </select>
+    </div>
+    <div class="form-group">
       <label for="judge-input">Главный судья</label>
       <input type="text" id="judge-input" name="main_judge" required />
     </div>
@@ -31,6 +39,7 @@
     <button type="submit">Создать матч</button>
   </form>
 </div>
-{% endblock %}{% block scripts %} {{ block.super }}
+
+{% endblock %} {% block scripts %}{{ block.super }}
 <script src="{% static 'js/game_create.js' %}"></script>
 {% endblock %}
