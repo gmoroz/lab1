@@ -1,6 +1,6 @@
-from django.urls import path
+from django.urls import include, path
 from django.views.generic import TemplateView
-from rest_framework.routers import SimpleRouter
+from rest_framework.routers import DefaultRouter
 
 from .views import (
     GameFormViewForCreate,
@@ -11,7 +11,7 @@ from .views import (
     TournamentView,
 )
 
-router = SimpleRouter()
+router = DefaultRouter()
 router.register("teams", TeamViewSet, basename="teams")
 router.register("titles", TitleViewSet, basename="titles")
 router.register("games", GameViewSet, basename="games")
@@ -29,6 +29,5 @@ urlpatterns = [
         name="titles-create",
     ),
     path("games/create/", GameFormViewForCreate.as_view(), name="game-create"),
+    path("", include(router.urls)),
 ]
-
-urlpatterns += router.urls
