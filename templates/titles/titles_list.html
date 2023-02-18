@@ -1,6 +1,5 @@
-{% extends 'base.html' %} {% load static %}
-{% block title %}Список титулов{%endblock %}
-{% block styles %}{{ block.super }}
+{% extends 'base.html' %} {% load static %} {% block title %}Список
+титулов{%endblock %} {% block styles %}{{ block.super }}
 <link rel="stylesheet" type="text/css" href="{% static 'css/titles.css' %}" />
 {% endblock %} {% block content %}
 <h1>Список титулов</h1>
@@ -17,6 +16,7 @@
       <td>{{ title.name }}</td>
       <td>
         <a class="button" href="/titles/{{ title.id }}">Подробнее</a>
+        {% csrf_token %}
         <button class="button delete-button" data-title-id="{{ title.id }}">
           Удалить
         </button>
