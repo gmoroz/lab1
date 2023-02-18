@@ -6,6 +6,7 @@
 <div class="form-container">
   <h1>Создать матч</h1>
   <form id="game-create-form">
+    {% csrf_token %}
     <div class="form-group">
       <label for="date-input">Дата матча</label>
       <input type="date" id="date-input" name="date_of_the_match" required />

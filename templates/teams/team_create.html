@@ -3,6 +3,7 @@
     {% endblock %} {% block content %}
     <h1>Создать новую команду</h1>
     <form id="team-form" action="/teams/" method="POST">
+      {% csrf_token %}
       <label for="name">Название команды:</label>
       <input type="text" id="name" name="name" /><br />
 

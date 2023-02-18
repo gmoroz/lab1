@@ -13,6 +13,7 @@
     <div class="container">
       <h1>Создание титула</h1>
       <form id="title-form" action="/titles/" method="POST">
+        {% csrf_token %}
         <label for="name">Название:</label>
         <input type="text" id="name" name="name" />
         <input type="submit" value="Сохранить" />
