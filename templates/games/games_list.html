@@ -27,6 +27,7 @@
         <button class="details-button" data-game-id="{{ game.id }}">
           Подробнее
         </button>
+        {% csrf_token %}
         <button class="delete-button" data-game-id="{{ game.id }}">
           Удалить
         </button>

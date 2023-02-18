@@ -1,28 +1,20 @@
-document.addEventListener("DOMContentLoaded", function () {
-  const detailsButtons = document.querySelectorAll(".details-button");
-  const deleteButtons = document.querySelectorAll(".delete-button");
-
-  detailsButtons.forEach(function (button) {
-    button.addEventListener("click", function () {
-      const gameId = button.dataset.gameId;
-      window.location.href = `/games/${gameId}/`;
-    });
-  });
-
-  deleteButtons.forEach(function (button) {
-    button.addEventListener("click", function () {
-      const gameId = button.dataset.gameId;
-      if (confirm("Вы уверены, что хотите удалить этот матч?")) {
-        fetch(`/games/${gameId}/`, {
-          method: "DELETE",
-        })
-          .then(function () {
-            location.reload();
-          })
-          .catch(function (error) {
-            console.error("Error:", error);
-          });
-      }
-    });
+$(function () {
+  $(".delete-button").click(function () {
+    var gameId = $(this).data("game-id");
+    var csrfToken = Cookies.get("csrftoken");
+    var confirmation = confirm("Вы уверены, что хотите удалить этот матч?");
+    if (confirmation) {
+      $.ajax({
+        url: "/games/" + gameId + "/",
+        method: "DELETE",
+        headers: { "X-CSRFToken": csrfToken },
+        success: function () {
+          location.reload();
+        },
+        error: function () {
+          alert("Не удалось удалить матч");
+        },
+      });
+    }
   });
 });
