@@ -1,46 +1,6 @@
 {% extends 'base.html' %} {% load static %}
 {% block title %}Список команд{% endblock %} {% block styles %}{{ block.super }}
-<style>
-  table {
-  border-collapse: collapse;
-  width: 100%;
-  margin: 20px 0;
-}
-
-th,
-td {
-  text-align: left;
-  padding: 8px;
-}
-
-th {
-  background-color: #4caf50;
-  color: white;
-}
-
-tr:nth-child(even) {
-  background-color: #f2f2f2;
-}
-
-button {
-  display: inline-block;
-  background-color: #4caf50;
-  border: none;
-  color: white;
-  padding: 10px 20px;
-  text-align: center;
-  text-decoration: none;
-  display: inline-block;
-  font-size: 16px;
-  margin-right: 10px;
-  cursor: pointer;
-}
-
-button.delete-btn {
-  background-color: #f44336;
-}
-
-</style>
+<link rel="stylesheet" type="text/css" href="{% static 'css/teams.css' %}" />
 {% endblock %} {% block content %}
 <h1>Список команд</h1>
 <table>
@@ -67,17 +27,5 @@ button.delete-btn {
   </tbody>
 </table>
 {% endblock %} {% block scripts %}{{ block.super }}
-<script>
-  function confirmDelete(teamId) {
-    if (confirm("Вы точно хотите удалить эту команду?")) {
-      fetch(`/teams/${teamId}`, {
-        method: "DELETE",
-      }).then((response) => {
-        if (response.ok) {
-          window.location.reload();
-        }
-      });
-    }
-  }
-</script>
+<script src="{% static 'js/teams.js' %}"></script>
 {% endblock %}
