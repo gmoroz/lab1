@@ -1,12 +1,6 @@
-{% load static %}
-<!DOCTYPE html>
-<html>
-  <head>
-    <title>Команда</title>
+{% extends 'base.html' %} {% load static %} {% block title %}Команда{% endblock %}{% block styles %}{{ block.super }}
     <link rel="stylesheet" type="text/css" href="{% static 'css/team.css' %}" />
-    <script src="{% static 'js/team_create.js' %}"></script>
-  </head>
-  <body>
+    {% endblock %} {% block content %}
     <h1>Создать новую команду</h1>
     <form id="team-form" action="/teams/" method="POST">
       <label for="name">Название команды:</label>
@@ -40,6 +34,5 @@
       <br />
 
       <input type="submit" value="Создать команду" />
-    </form>
-  </body>
-</html>
+    </form>{% endblock %} {% block scripts %}{{ block.super }}
+    <script src="{% static 'js/team_create.js' %}"></script>{% endblock %}
