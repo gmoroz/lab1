@@ -39,7 +39,7 @@ class GameViewSet(ModelViewSet):
 
 
 class TournamentView(TemplateView):
-    template_name = "tournament_table.html"
+    template_name = "table.html"
 
     def get_context_data(self, **kwargs: Any) -> dict[str, Any]:
         context = super().get_context_data(**kwargs)
