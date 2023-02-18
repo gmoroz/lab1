@@ -1,51 +1,52 @@
-document.addEventListener("DOMContentLoaded", function () {
+$(document).ready(function () {
   // Получаем форму и поля формы
-  const form = document.getElementById("game-create-form");
-  const dateField = document.getElementById("date-input");
-  const team1Field = document.getElementById("team1-input");
-  const team2Field = document.getElementById("team2-input");
-  const judgeField = document.getElementById("judge-input");
-  const resultField = document.getElementById("result-input");
+  const form = $("#game-create-form");
+  const dateField = $("#date-input");
+  const team1Field = $("#team1-input");
+  const team2Field = $("#team2-input");
+  const judgeField = $("#judge-input");
+  const resultField = $("#result-input");
 
   // Обрабатываем отправку формы
-  form.addEventListener("submit", function (event) {
+  form.submit(function (event) {
     // Отменяем действие по умолчанию браузера
     event.preventDefault();
 
     // Получаем данные из полей формы
-    const date = dateField.value;
-    const team1 = team1Field.value;
-    const team2 = team2Field.value;
-    const judge = judgeField.value;
-    const result = resultField.value;
+    const date = dateField.val();
+    const team1 = team1Field.val();
+    const team2 = team2Field.val();
+    const judge = judgeField.val();
+    const result = resultField.val();
+
+    // Получаем токен
+    const csrfToken = $("[name=csrfmiddlewaretoken]").val();
 
     // Отправляем POST-запрос на сервер
-    fetch("/games/", {
-      method: "POST",
+    $.ajax({
+      url: "/games/",
+      type: "POST",
       headers: {
         "Content-Type": "application/json",
+        "X-CSRFToken": csrfToken, // добавляем токен в заголовок запроса
       },
-      body: JSON.stringify({
+      data: JSON.stringify({
         date_of_the_match: date,
         teams: [team1, team2],
         main_judge: judge,
         result: result | null,
       }),
-    })
-      .then((response) => {
-        if (response.ok) {
-          alert("Матч успешно создан!");
-          // Очищаем поля формы
-          form.reset();
-          // Редирект на страницу /games/
-          window.location.replace("/games/");
-        } else {
-          throw new Error("Ошибка HTTP: " + response.status);
-        }
-      })
-      .catch((error) => {
+      success: function () {
+        alert("Матч успешно создан!");
+        // Очищаем поля формы
+        form[0].reset();
+        // Редирект на страницу /games/
+        window.location.replace("/games/");
+      },
+      error: function (error) {
         console.error(error);
         alert("Произошла ошибка при создании матча.");
-      });
+      },
+    });
   });
 });
