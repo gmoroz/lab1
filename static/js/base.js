@@ -1,11 +1,10 @@
-// Скрипт для выпадающего меню
 $(document).ready(function () {
   $(".nav-item").hover(
     function () {
-      $("ul", this).stop().slideDown(200);
+      $(this).find("ul").stop(true, true).slideDown(200);
     },
     function () {
-      $("ul", this).stop().slideUp(200);
+      $(this).find("ul").stop(true, true).slideUp(200);
     }
   );
 });

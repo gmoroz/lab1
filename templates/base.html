@@ -35,61 +35,74 @@
                 href="#"
                 id="titlesDropdown"
                 role="button"
-                data-toggle="dropdown"
-                aria-haspopup="true"
+                data-bs-toggle="dropdown"
                 aria-expanded="false"
               >
                 Титулы
               </a>
-              <div class="dropdown-menu" aria-labelledby="titlesDropdown">
-                <a class="dropdown-item" href="{% url 'titles-list' %}"
-                  >Все Титулы</a
+              <ul class="dropdown-menu" aria-labelledby="titlesDropdown">
+                <li>
+                  <a class="dropdown-item" href="{% url 'titles-list' %}"
+                    >Все Титулы</a
+                  >
+                </li>
+                <li>
+                  <a class="dropdown-item" href="{% url 'titles-create' %}"
+                    >Создать Титул</a
+                  >
+                </li>
+              </ul>
+            </li>
+            <li class="nav-item dropdown">
+              <div class="dropdown">
+                <a
+                  class="nav-link dropdown-toggle"
+                  href="#"
+                  id="teamsDropdown"
+                  role="button"
+                  data-bs-toggle="dropdown"
+                  aria-expanded="false"
                 >
-                <a class="dropdown-item" href="{% url 'titles-create' %}"
-                  >Создать Титул</a
-                >
+                  Команды
+                </a>
+                <ul class="dropdown-menu" aria-labelledby="teamsDropdown">
+                  <li>
+                    <a class="dropdown-item" href="{% url 'teams-list' %}"
+                      >Все Команды</a
+                    >
+                  </li>
+                  <li>
+                    <a class="dropdown-item" href="{% url 'teams-create' %}"
+                      >Создать Команду</a
+                    >
+                  </li>
+                </ul>
               </div>
             </li>
             <li class="nav-item dropdown">
-              <a
-                class="nav-link dropdown-toggle"
-                href="#"
-                id="teamsDropdown"
-                role="button"
-                data-toggle="dropdown"
-                aria-haspopup="true"
-                aria-expanded="false"
-              >
-                Команды
-              </a>
-              <div class="dropdown-menu" aria-labelledby="teamsDropdown">
-                <a class="dropdown-item" href="{% url 'teams-list' %}"
-                  >Все Команды</a
+              <div class="dropdown">
+                <a
+                  class="nav-link dropdown-toggle"
+                  href="#"
+                  id="gamesDropdown"
+                  role="button"
+                  data-bs-toggle="dropdown"
+                  aria-expanded="false"
                 >
-                <a class="dropdown-item" href="{% url 'teams-create' %}"
-                  >Создать Команду</a
-                >
-              </div>
-            </li>
-            <li class="nav-item dropdown">
-              <a
-                class="nav-link dropdown-toggle"
-                href="#"
-                id="gamesDropdown"
-                role="button"
-                data-toggle="dropdown"
-                aria-haspopup="true"
-                aria-expanded="false"
-              >
-                Игры
-              </a>
-              <div class="dropdown-menu" aria-labelledby="gamesDropdown">
-                <a class="dropdown-item" href="{% url 'games-list' %}"
-                  >Все Игры</a
-                >
-                <a class="dropdown-item" href="{% url 'game-create' %}"
-                  >Создать Игру</a
-                >
+                  Игры
+                </a>
+                <ul class="dropdown-menu" aria-labelledby="gamesDropdown">
+                  <li>
+                    <a class="dropdown-item" href="{% url 'games-list' %}"
+                      >Все Игры</a
+                    >
+                  </li>
+                  <li>
+                    <a class="dropdown-item" href="{% url 'game-create' %}"
+                      >Создать Игру</a
+                    >
+                  </li>
+                </ul>
               </div>
             </li>
             <li class="nav-item">
@@ -107,7 +120,7 @@
 
     <div class="container mt-4">{% block content %}{% endblock %}</div>
     {% block scripts %}
-    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
     <script src="{% static 'js/base.js' %}"></script>
