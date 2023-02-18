@@ -1,6 +1,15 @@
+import logging
+
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
 from django.shortcuts import redirect, render
+
+logger = logging.getLogger(__name__)
+logger.debug("Debug message")
+logger.info("Info message")
+logger.warning("Warning message")
+logger.error("Error message")
+logger.critical("Critical message")
 
 
 def login_view(request):
