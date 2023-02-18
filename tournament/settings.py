@@ -143,15 +143,34 @@ LOGGING = {
     "handlers": {
         "file": {
             "level": "DEBUG",
-            "class": "logging.FileHandler",
+            "class": "logging.handlers.RotatingFileHandler",
             "filename": "logs/debug.log",
+            "maxBytes": 1024 * 1024 * 5,  # 5 MB
+            "backupCount": 5,
+            "formatter": "custom",
+        },
+    },
+    "formatters": {
+        "custom": {
+            "format": "{levelname} {asctime} {module} {process:d} {thread:d} {message}",
+            "style": "{",
         },
     },
     "loggers": {
-        "django": {
-            "handlers": ["file"],
+        "django.db.backends": {
             "level": "DEBUG",
-            "propagate": True,
+            "handlers": ["file"],
+            "propagate": False,
+        },
+        # "django": {
+        #     "handlers": ["file"],
+        #     "level": "ERORR",
+        #     "propagate": False,
+        # },
+        "": {
+            "handlers": ["file"],
+            "level": "ERROR",
+            "propagate": False,
         },
     },
 }

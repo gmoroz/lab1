@@ -1,3 +1,4 @@
+import logging
 from typing import Any
 
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -7,6 +8,8 @@ from rest_framework.viewsets import ModelViewSet
 
 from .models import Calendar, Team, Title
 from .serializers import CalendarSerializer, TeamSerializer, TitleSerializer
+
+logger = logging.getLogger(__name__)
 
 
 class GameViewSet(LoginRequiredMixin, ModelViewSet):
