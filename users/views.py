@@ -37,7 +37,7 @@ def register_view(request):
         if password != confirm_password:
             error = "Пароли не совпадают"
             return render(request, "register.html", {"error": error})
-        if User.objects.get(username=username):
+        if User.objects.filter(username=username).first():
             error = "Пользователь с таким именем уже существует!"
             return render(request, "register.html", {"error": error})
 
