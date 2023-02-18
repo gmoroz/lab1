@@ -1,0 +1,52 @@
+{% extends 'base.html' %} {% block title %}Турнирная таблица{% endblock %}
+{% block styles %} {{ block.super }}
+<style>
+  table {
+    border-collapse: collapse;
+    width: 100%;
+    margin: 20px auto;
+  }
+
+  th,
+  td {
+    border: 1px solid black;
+    padding: 8px;
+    text-align: center;
+  }
+
+  th {
+    background-color: #eee;
+  }
+
+  tr:nth-child(even) {
+    background-color: #f2f2f2;
+  }
+
+  .place {
+    font-weight: bold;
+    font-size: 1.2em;
+  }
+</style>
+{% endblock %} {% block content %}
+<h1>Турнирная таблица</h1>
+<table>
+  <thead>
+    <tr>
+      <th>Команда</th>
+      <th>Игры</th>
+      <th>Очки</th>
+      <th>Место</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for team in teams %}
+    <tr>
+      <td>{{ team.name }}</td>
+      <td>{{ team.games_count }}</td>
+      <td>{{ team.points }}</td>
+      <td class="place">{{ forloop.counter }}</td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% endblock %}
