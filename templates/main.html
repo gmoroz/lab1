@@ -1,16 +1,17 @@
-{% extends 'base.html' %} {% load static %} {% block title %}Меню{% endblock %}
-{% block styles %}{{ block.super }}
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Главная страница{% endblock %}
+{% block styles %} {{ block.super }}
 <link rel="stylesheet" type="text/css" href="{% static 'css/main.css' %}" />
-{% endblock %} {% block content %}
-
-<h1>Меню</h1>
-<div class="buttons">
-  <a href="{% url 'titles-list' %}" class="title-btn">Все титулы</a>
-  <a href="{% url 'titles-create' %}" class="title-btn">Создать титул</a>
-  <a href="{% url 'teams-list' %}" class="team-btn">Все команды</a>
-  <a href="{% url 'teams-create' %}" class="team-btn">Создать команду</a>
-  <a href="{% url 'games-list' %}" class="game-btn">Все матчи</a>
-  <a href="{% url 'game-create' %}" class="game-btn">Создать матч</a>
-  <a href="{% url 'table' %}" class="table-btn">Турнирная таблица</a>
+{% endblock %}
+{% block content %}
+<div class="main-container">
+  <h1 class="main-h1">
+    Я не придумал, что выводить на главной странице, поэтому пусть тут будет эта
+    надпись и футбольный мячик
+  </h1>
+  <div id="ball"></div>
 </div>
-{% endblock %} {% block scripts %}{{ block.super }} {% endblock %}
+{% endblock %} {% block scripts %} {{ block.super }}
+<script src="{% static 'js/main.js' %}"></script>
+{% endblock %}
