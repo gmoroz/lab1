@@ -1,3 +1,4 @@
+from django.contrib.auth.decorators import login_required
 from django.urls import include, path
 from django.views.generic import TemplateView
 from rest_framework.routers import DefaultRouter
@@ -25,9 +26,17 @@ urlpatterns = [
     ),
     path(
         "titles/create/",
-        TemplateView.as_view(template_name="titles/title_create.html"),
+        login_required(
+            TemplateView.as_view(
+                template_name="titles/title_create.html",
+            ),
+        ),
         name="titles-create",
     ),
-    path("games/create/", GameFormViewForCreate.as_view(), name="game-create"),
+    path(
+        "games/create/",
+        GameFormViewForCreate.as_view(),
+        name="game-create",
+    ),
     path("", include(router.urls)),
 ]

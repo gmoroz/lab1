@@ -1,5 +1,6 @@
 from typing import Any
 
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import redirect, render
 from django.views.generic import TemplateView
 from rest_framework.viewsets import ModelViewSet
@@ -8,7 +9,7 @@ from .models import Calendar, Team, Title
 from .serializers import CalendarSerializer, TeamSerializer, TitleSerializer
 
 
-class GameViewSet(ModelViewSet):
+class GameViewSet(LoginRequiredMixin, ModelViewSet):
     queryset = (
         Calendar.objects.all()
         .prefetch_related("teams")
@@ -38,7 +39,7 @@ class GameViewSet(ModelViewSet):
         return redirect("/games/")
 
 
-class TournamentView(TemplateView):
+class TournamentView(LoginRequiredMixin, TemplateView):
     template_name = "table.html"
 
     def get_context_data(self, **kwargs: Any) -> dict[str, Any]:
@@ -51,7 +52,7 @@ class TournamentView(TemplateView):
         return context
 
 
-class TeamViewSet(ModelViewSet):
+class TeamViewSet(LoginRequiredMixin, ModelViewSet):
     queryset = Team.objects.all()
     serializer_class = TeamSerializer
 
@@ -63,7 +64,9 @@ class TeamViewSet(ModelViewSet):
         instance = self.get_object()
         titles = Title.objects.all()
         return render(
-            request, "teams/team.html", {
+            request,
+            "teams/team.html",
+            {
                 "team": instance,
                 "all_titles": titles,
             },
@@ -74,7 +77,7 @@ class TeamViewSet(ModelViewSet):
         return redirect("/teams/")
 
 
-class TeamFormViewForCreate(TemplateView):
+class TeamFormViewForCreate(LoginRequiredMixin, TemplateView):
     template_name = "teams/team_create.html"
 
     def get_context_data(self, **kwargs: Any) -> dict[str, Any]:
@@ -83,7 +86,7 @@ class TeamFormViewForCreate(TemplateView):
         return context
 
 
-class GameFormViewForCreate(TemplateView):
+class GameFormViewForCreate(LoginRequiredMixin, TemplateView):
     template_name = "games/game_create.html"
 
     def get_context_data(self, **kwargs: Any) -> dict[str, Any]:
@@ -92,7 +95,7 @@ class GameFormViewForCreate(TemplateView):
         return context
 
 
-class TitleViewSet(ModelViewSet):
+class TitleViewSet(LoginRequiredMixin, ModelViewSet):
     queryset = Title.objects.all()
     serializer_class = TitleSerializer
 
