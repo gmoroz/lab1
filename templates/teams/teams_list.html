@@ -17,7 +17,7 @@
       <td>
         <a href="{% url 'teams-detail' team.id %}">
           <button>Подробнее</button>
-        </a>
+        </a>{% csrf_token %}
         <button class="delete-btn" onclick="confirmDelete('{{ team.id }}')">
           Удалить
         </button>
