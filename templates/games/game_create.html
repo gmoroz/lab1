@@ -1,54 +1,36 @@
-{% load static %}
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <title>Создать матч</title>
-    <link rel="stylesheet" href="{% static 'css/game_create.css' %}" />
-  </head>
-  <body>
-    <div class="form-container">
-      <h1>Создать матч</h1>
-      <form id="game-create-form">
-        <div class="form-group">
-          <label for="date-input">Дата матча</label>
-          <input
-            type="date"
-            id="date-input"
-            name="date_of_the_match"
-            required
-          />
-        </div>
-        <div class="form-group">
-          <label for="team1-input">Команда 1</label>
-          <select id="team1-input" name="team1" required>
-            <option value="">Выберите команду</option>
-            {% for team in teams %}
-            <option value="{{ team.id }}">{{ team.name }}</option>
-            {% endfor %}
-          </select>
-        </div>
-        <div class="form-group">
-          <label for="team2-input">Команда 2</label>
-          <select id="team2-input" name="team2" required>
-            <option value="">Выберите команду</option>
-            {% for team in teams %}
-            <option value="{{ team.id }}">{{ team.name }}</option>
-            {% endfor %}
-          </select>
-        </div>
-        <div class="form-group">
-          <label for="judge-input">Главный судья</label>
-          <input type="text" id="judge-input" name="main_judge" required />
-        </div>
-        <div class="form-group">
-          <label for="result-input">Результат матча</label>
-          <input type="text" id="result-input" name="result" />
-        </div>
-        <button type="submit">Создать матч</button>
-      </form>
+{% extends 'base.html' %} {% load static %}
+{% block title %}
+Создать матч
+{% endblock %} {% block styles %} {{ block.super }}
+<link rel="stylesheet" href="{% static 'css/game_create.css' %}" />
+{% endblock %} {% block content %}
+<div class="form-container">
+  <h1>Создать матч</h1>
+  <form id="game-create-form">
+    <div class="form-group">
+      <label for="date-input">Дата матча</label>
+      <input type="date" id="date-input" name="date_of_the_match" required />
     </div>
-
-    <script src="{% static 'js/game_create.js' %}"></script>
-  </body>
-</html>
+    <div class="form-group">
+      <label for="team1-input">Команда 1</label>
+      <select id="team1-input" name="team1" required>
+        <option value="">Выберите команду</option>
+        {% for team in teams %}
+        <option value="{{ team.id }}">{{ team.name }}</option>
+        {% endfor %}
+      </select>
+    </div>
+    <div class="form-group">
+      <label for="judge-input">Главный судья</label>
+      <input type="text" id="judge-input" name="main_judge" required />
+    </div>
+    <div class="form-group">
+      <label for="result-input">Результат матча</label>
+      <input type="text" id="result-input" name="result" />
+    </div>
+    <button type="submit">Создать матч</button>
+  </form>
+</div>
+{% endblock %}{% block scripts %} {{ block.super }}
+<script src="{% static 'js/game_create.js' %}"></script>
+{% endblock %}
