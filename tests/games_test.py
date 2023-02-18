@@ -22,3 +22,10 @@ def test_filter_games_by_team(client, calendar):
     url = reverse("games-list")
     response = client.get(url, {"team": "Test Team"})
     assert response.status_code == status.HTTP_200_OK
+
+
+@pytest.mark.django_db
+def test_retrieve_game(client, calendar):
+    url = reverse("games-detail", args=[calendar.id])
+    response = client.get(url)
+    assert response.status_code == status.HTTP_200_OK
