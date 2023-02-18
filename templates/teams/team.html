@@ -2,10 +2,10 @@
 {% block title %}Команда{% endblock%}
 {% block styles %}{{ block.super }}
 <link rel="stylesheet" type="text/css" href="{% static 'css/team.css' %}" />
-<script src="{% static 'js/team.js' %}"></script>
 {% endblock %} {% block content %}
 <h1>Информация о команде</h1>
 <form id="team-form">
+  {% csrf_token %}
   <label for="name">Название команды:</label>
   <input type="text" id="name" name="name" value="{{ team.name }}" /><br />
 
@@ -47,14 +47,7 @@
         type="checkbox"
         name="titles"
         value="{{ title.id }}"
-        {%
-        if
-        title
-        in
-        team.titles.all
-        %}checked{%
-        endif
-        %}
+        {% if title in team.titles.all %}checked{% endif %}
       />
       {{ title.name }} </label
     ><br />
@@ -64,4 +57,5 @@
 
   <input type="submit" value="Сохранить" />
 </form>
-{% endblock %} {% block scripts %}{{ block.super }} {% endblock %}
+{% endblock %} {% block scripts %}
+{{ block.super }}<script src="{% static 'js/team.js' %}"></script> {% endblock %}
