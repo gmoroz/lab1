@@ -1,31 +1,35 @@
-document
-  .getElementById("game-form")
-  .addEventListener("submit", function (event) {
-    event.preventDefault();
+const form = $("#game-form");
+const dateField = $("#date_of_the_match");
+const team1Field = $("#team1");
+const team2Field = $("#team2");
+const judgeField = $("#main_judge");
+const resultField = $("#result");
 
-    var xhr = new XMLHttpRequest();
-    var gameId = window.location.pathname.split("/").filter(Boolean).pop();
-    xhr.open("PUT", "/games/" + gameId + "/");
-    xhr.setRequestHeader("Content-Type", "application/json");
+const gameId = window.location.pathname.split("/").filter(Boolean).pop();
 
-    var formData = new FormData(document.getElementById("game-form"));
-    var formDataObj = Object.fromEntries(formData.entries());
-    var teams = [formDataObj["team1"], formDataObj["team2"]];
-    var gameData = {
-      date_of_the_match: formDataObj["date_of_the_match"],
-      teams: teams,
-      main_judge: formDataObj["main_judge"],
-      result: formDataObj["result"],
-    };
-    var data = JSON.stringify(gameData);
-
-    xhr.onload = function () {
-      if (xhr.status === 200) {
-        alert("Изменения успешно сохранены");
-      } else {
-        alert("Произошла ошибка при сохранении");
-      }
-    };
-
-    xhr.send(data);
-  });
+form.submit(function (event) {
+  event.preventDefault();
+  const data = {
+    date_of_the_match: dateField.val(),
+    teams: [team1Field.val(), team2Field.val()],
+    main_judge: judgeField.val(),
+    result: resultField.val() || null,
+  };
+  $.ajax({
+    method: "PUT",
+    url: `/games/${gameId}/`,
+    data: JSON.stringify(data),
+    headers: {
+      "Content-Type": "application/json",
+      "X-CSRFToken": form.find('input[name="csrfmiddlewaretoken"]').val(),
+    },
+  })
+    .done(function (data) {
+      console.log("Success:", data);
+      alert("Game updated successfully!");
+    })
+    .fail(function (jqXHR, textStatus, errorThrown) {
+      console.error("Error:", textStatus, errorThrown);
+      alert("An error occurred while updating the game.");
+    });
+});

@@ -9,6 +9,7 @@
 <div class="grid-container">
   <h1 class="title">Подробная информация о матче</h1>
   <form id="game-form">
+    {% csrf_token %}
     <label for="date_of_the_match">Дата матча:</label>
     <input
       type="date"
