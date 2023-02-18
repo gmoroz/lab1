@@ -24,7 +24,7 @@
       <td>{{ game.main_judge }}</td>
       <td>{{ game.result|default_if_none:"-" }}</td>
       <td>
-        <button class="details-button" data-game-id="{{ game.id }}">
+        <button class="details-button" data-game-id="{{ game.id }}" onclick="window.location.href='/games/{{ game.id }}/'">
           Подробнее
         </button>
         {% csrf_token %}
