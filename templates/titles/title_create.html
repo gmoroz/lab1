@@ -1,23 +1,14 @@
-{% load static %}
-<!DOCTYPE html>
-<html>
-  <head>
-    <title>Создание титула</title>
-    <link
-      rel="stylesheet"
-      type="text/css"
-      href="{% static 'css/title.css' %}"
-    />
-  </head>
-  <body>
-    <div class="container">
-      <h1>Создание титула</h1>
-      <form id="title-form" action="/titles/" method="POST">
-        {% csrf_token %}
-        <label for="name">Название:</label>
-        <input type="text" id="name" name="name" />
-        <input type="submit" value="Сохранить" />
-      </form>
-    </div>
-  </body>
-</html>
+{% extends 'base.html' %} {% load static %} {% block title %}Создание титула
+{% endblock %} {% block styles %} {{ block.super }}
+<link rel="stylesheet" type="text/css" href="{% static 'css/title.css' %}" />
+{% endblock %} {% block content %}
+<div class="title-container">
+  <h1>Создание титула</h1>
+  <form id="title-form" action="/titles/" method="POST">
+    {% csrf_token %}
+    <label for="name">Название:</label>
+    <input type="text" id="name" name="name" />
+    <input type="submit" value="Сохранить" class="save-btn" />
+  </form>
+</div>
+{% endblock %} {% block scripts %} {{ block.super }} {% endblock %}
