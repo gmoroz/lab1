@@ -42,8 +42,3 @@ tr:nth-child(even) {
     margin: 4px 2px;
     cursor: pointer;
 }
-body {
-    background-image: url('static/images/game_bg.jpeg');
-    background-repeat: no-repeat;
-    background-size: cover;
-  }
