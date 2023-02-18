@@ -1,36 +1,35 @@
-// Получаем форму и кнопку сохранения
-const titleForm = document.getElementById("title-form");
-const saveBtn = document.getElementById("save-btn");
+$(document).ready(function () {
+  // Получаем форму и кнопку сохранения
+  const $titleForm = $("#title-form");
+  const $saveBtn = $(".save-btn");
 
-// Обработчик события нажатия на кнопку сохранения
-saveBtn.addEventListener("click", function (e) {
-  e.preventDefault(); // Отменяем стандартное действие кнопки
+  // Обработчик события нажатия на кнопку сохранения
+  $saveBtn.on("click", function (e) {
+    e.preventDefault(); // Отменяем стандартное действие кнопки
 
-  // Получаем данные формы
-  const titleId = document.getElementById("title-id").value;
-  const titleName = document.getElementById("name").value;
+    // Получаем данные формы
+    const titleId = $("#title-id").val();
+    const titleName = $("#name").val();
 
-  // Отправляем PUT-запрос на сервер
-  fetch(`/titles/${titleId}/`, {
-    method: "PUT",
-    headers: {
-      "Content-Type": "application/json",
-      "X-CSRFToken": "{{ csrf_token }}", // Передаем CSRF-токен для защиты от CSRF-атак
-    },
-    body: JSON.stringify({ name: titleName }),
-  })
-    .then((response) => {
-      if (!response.ok) {
-        throw new Error("Network response was not ok");
-      }
-      return response.json();
-    })
-    .then((data) => {
-      console.log("Data saved:", data);
-      // Дополнительные действия после успешного сохранения
-    })
-    .catch((error) => {
-      console.error("Error saving data:", error);
-      // Дополнительные действия при ошибке сохранения
+    // Отправляем PUT-запрос на сервер
+    $.ajax({
+      url: `/titles/${titleId}/`,
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+        "X-CSRFToken": $titleForm
+          .find('input[name="csrfmiddlewaretoken"]')
+          .val(), // Получаем CSRF-токен из скрытого поля формы
+      },
+      data: JSON.stringify({ name: titleName }),
+      success: function (data) {
+        console.log("Data saved:", data);
+        // Дополнительные действия после успешного сохранения
+      },
+      error: function (xhr, status, error) {
+        console.error("Error saving data:", error);
+        // Дополнительные действия при ошибке сохранения
+      },
     });
+  });
 });
