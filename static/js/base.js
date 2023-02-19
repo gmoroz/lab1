@@ -4,7 +4,9 @@ $(document).ready(function () {
       $(this).find("ul").stop(true, true).slideDown(200);
     },
     function () {
-      $(this).find("ul").stop(true, true).slideUp(200);
+      setTimeout(() => {
+        $(this).find("ul").stop(true, true).slideUp(200);
+      }, 100);
     }
   );
 });
