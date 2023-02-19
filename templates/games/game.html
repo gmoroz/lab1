@@ -10,12 +10,13 @@
   <h1 class="title">Подробная информация о матче</h1>
   <form id="game-form">
     {% csrf_token %}
-    <label for="date_of_the_match">Дата матча:</label>
+    <label for="date_of_the_match" >Дата матча:</label>
     <input
       type="date"
       id="date_of_the_match"
       name="date_of_the_match"
       value="{% if game.date_of_the_match %}{{ game.date_of_the_match|date:'Y-m-d' }}{% endif %}"
+      {% if not user.is_staff %} disabled {% endif %}
     />
 
     <label for="main_judge">Главный судья:</label>
@@ -24,9 +25,10 @@
       id="main_judge"
       name="main_judge"
       value="{{ game.main_judge|default:'' }}"
+      {% if not user.is_staff %} disabled {% endif %}
     />
     <label for="team1">Команда 1:</label>
-    <select id="team1" name="team1">
+    <select id="team1" name="team1" {% if not user.is_staff %} disabled {% endif %}>
       {% for team in teams %} {% if game.teams.all.0.id == team.id %}
       <option value="{{ team.id }}" selected>{{ team.name }}</option>
       {% else %}
@@ -35,7 +37,7 @@
     </select>
 
     <label for="team2">Команда 2:</label>
-    <select id="team2" name="team2">
+    <select id="team2" name="team2" {% if not user.is_staff %} disabled {% endif %}>
       {% for team in teams %} {% if game.teams.all.1.id == team.id %}
       <option value="{{ team.id }}" selected>{{ team.name }}</option>
       {% else %}
@@ -49,8 +51,9 @@
       id="result"
       name="result"
       value="{{ game.result|default:'' }}"
+      {% if not user.is_staff %} disabled {% endif %}
     />
-    <button type="submit" id="save-btn">Сохранить</button>
+    <button type="submit" id="save-btn" {% if not user.is_staff %} hidden {% endif %}>Сохранить</button>
   </form>
 </div>
 {% endblock %} {% block scripts %}{{ block.super }}
