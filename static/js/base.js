@@ -1,12 +1,20 @@
 $(document).ready(function () {
-  $(".nav-item").hover(
+  // Отслеживаем наведение мыши на навигационное меню
+  $('.navbar-nav .dropdown').hover(
     function () {
-      $(this).find("ul").stop(true, true).slideDown(400);
+      // Показываем выпадающее меню
+      $(this).find('.dropdown-menu').first().stop(true, true).delay(150).slideDown();
+
     },
     function () {
-      setTimeout(() => {
-        $(this).find("ul").stop(true, true).slideUp(400);
-      }, 100);
+      // Скрываем выпадающее меню
+      $(this).find('.dropdown-menu').first().stop(true, true).delay(100).slideUp();
+
     }
   );
+
+  // Запрещаем закрытие меню при щелчке на элементах выпадающего списка
+  $('.navbar-nav .dropdown-menu').click(function (e) {
+    e.stopPropagation();
+  });
 });
