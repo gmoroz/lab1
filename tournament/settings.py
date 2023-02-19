@@ -29,12 +29,12 @@ SECRET_KEY = "django-insecure-h@yantrez9#3z4a7#e$)$8dq#mme1r!)u@hosxl%79#mzbk%lx
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ["*"]
+ALLOWED_HOSTS = ["localhost", "127.0.0.1"]
 
 
 # Application definition
 
-INSTALLED_APPS = [
+DJANGO_APPS = [
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
@@ -42,21 +42,33 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "django_extensions",
-    "rest_framework",
     "channels",
-    "main",
-    "users",
+    "rest_framework",
+    "corsheaders",
 ]
+MY_APPS = [
+    "users",
+    "main",
+]
+
+INSTALLED_APPS = DJANGO_APPS + MY_APPS
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
+    "corsheaders.middleware.CorsMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
 ]
+
+CORS_ORIGIN_ALLOW_ALL = True
+CORS_ORIGIN_WHITELIST = [
+    "http://127.0.0.1",
+]
+
 
 ROOT_URLCONF = "tournament.urls"
 
@@ -127,7 +139,7 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.1/howto/static-files/
-
+STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
 STATIC_URL = "static/"
 STATICFILES_DIRS = [os.path.join(BASE_DIR, "static")]
 # Default primary key field type
@@ -158,16 +170,11 @@ LOGGING = {
         },
     },
     "loggers": {
-        "django.db.backends": {
+        "django": {
             "level": "DEBUG",
             "handlers": ["file"],
             "propagate": False,
         },
-        # "django": {
-        #     "handlers": ["file"],
-        #     "level": "ERORR",
-        #     "propagate": False,
-        # },
         "": {
             "handlers": ["file"],
             "level": "ERROR",
@@ -178,6 +185,9 @@ LOGGING = {
 ASGI_APPLICATION = "tournament.asgi.application"
 CHANNEL_LAYERS = {
     "default": {
-        "BACKEND": "channels.layers.InMemoryChannelLayer",
+        "BACKEND": "channels_redis.core.RedisChannelLayer",
+        "CONFIG": {
+            "hosts": [("localhost", 6379)],
+        },
     },
 }
