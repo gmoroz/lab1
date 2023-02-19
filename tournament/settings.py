@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     "django_extensions",
     "rest_framework",
+    "channels",
     "main",
     "users",
 ]
@@ -172,5 +173,11 @@ LOGGING = {
             "level": "ERROR",
             "propagate": False,
         },
+    },
+}
+ASGI_APPLICATION = "tournament.asgi.application"
+CHANNEL_LAYERS = {
+    "default": {
+        "BACKEND": "channels.layers.InMemoryChannelLayer",
     },
 }
