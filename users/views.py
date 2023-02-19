@@ -1,7 +1,10 @@
+from typing import Any
 
 from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.models import User
 from django.shortcuts import redirect, render
+from django.views.generic import TemplateView
 
 
 def login_view(request):
@@ -46,3 +49,12 @@ def register_view(request):
         return redirect("login")
 
     return render(request, "register.html")
+
+
+class RoomView(LoginRequiredMixin, TemplateView):
+    template_name = "room.html"
+
+    def get_context_data(self, **kwargs: Any) -> dict[str, Any]:
+        context = super().get_context_data(**kwargs)
+        context["room_name"] = self.request.GET.get("room_name")
+        return context
