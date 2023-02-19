@@ -1,5 +1,5 @@
 [tool.poetry]
-name = "lab1"
+name = "tournament_site"
 version = "0.1.0"
 description = ""
 authors = ["gmoroz <12345hasek@gmail.com>"]
