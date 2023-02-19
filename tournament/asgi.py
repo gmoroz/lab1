@@ -1,14 +1,6 @@
-"""
-ASGI config for tournament project.
-
-It exposes the ASGI callable as a module-level variable named ``application``.
-
-For more information on this file, see
-https://docs.djangoproject.com/en/4.1/howto/deployment/asgi/
-"""
-
 import os
 
+import django
 from channels.auth import AuthMiddlewareStack
 from channels.routing import ProtocolTypeRouter, URLRouter
 from django.core.asgi import get_asgi_application
@@ -16,10 +8,19 @@ from django.core.asgi import get_asgi_application
 from users.routing import websocket_urlpatterns
 
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "tournament.settings")
+django_asgi_app = get_asgi_application()
+
 
 application = ProtocolTypeRouter(
     {
-        "http": get_asgi_application(),
+        "http": django_asgi_app,
         "websocket": AuthMiddlewareStack(URLRouter(websocket_urlpatterns)),
     },
 )
+
+
+def load_django():
+    django.setup()
+
+
+worker_preload = load_django
