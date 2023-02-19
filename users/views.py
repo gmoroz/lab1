@@ -5,6 +5,10 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.models import User
 from django.shortcuts import redirect, render
 from django.views.generic import TemplateView
+from rest_framework.generics import ListAPIView
+
+from .models import ChatMessage
+from .serializers import ChatMessageSerializer
 
 
 def login_view(request):
@@ -52,9 +56,20 @@ def register_view(request):
 
 
 class RoomView(LoginRequiredMixin, TemplateView):
-    template_name = "room.html"
+    template_name = "chat.html"
 
     def get_context_data(self, **kwargs: Any) -> dict[str, Any]:
         context = super().get_context_data(**kwargs)
-        context["room_name"] = self.request.GET.get("room_name")
+        context["room_name"] = self.kwargs.get("room_name")
         return context
+
+
+class GetRoomMessages(ListAPIView):
+    serializer_class = ChatMessageSerializer
+    queryset = ChatMessage
+    lookup_field = "room"
+
+    def get_queryset(self):
+        room = self.kwargs.get("room")
+        queryset = ChatMessage.objects.filter(room=room).order_by("created_at")
+        return queryset
