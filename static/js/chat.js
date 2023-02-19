@@ -1,32 +1,54 @@
-const roomName = window.location.pathname.split("/").filter(Boolean).pop();
-
-const chatSocket = new WebSocket(
-  "ws://" + window.location.host + "/ws/chat/" + roomName + "/"
-);
-
-chatSocket.onmessage = function (e) {
-  const data = JSON.parse(e.data);
-  console.log(data);
-  if (data.tester) {
-    document.querySelector("#user-hello").innerHTML = data.tester;
-  } else if (data.message) {
-    const messageElement = document.createElement("li");
-    messageElement.textContent = `${data.username}: ${data.message}`;
-    document.querySelector("#messages").appendChild(messageElement);
-  }
-};
-
-const sendButton = document.querySelector("#send-button");
-const messageInputDom = document.querySelector("#message-input");
-const username = document.getElementById("username").value;
-
-sendButton.onclick = function (event) {
-  const messageContent = messageInputDom.value;
-  chatSocket.send(
-    JSON.stringify({
-      message: messageContent,
-      username: username,
-    })
+$(function () {
+  var url = window.location.href;
+  var room_name = url.match(/\/chat\/(.*)\//)[1];
+  var socket = new WebSocket(
+    "ws://" + window.location.host + "/ws/chat/" + room_name + "/"
   );
-  messageInputDom.value = "";
-};
+
+  // Функция для добавления сообщений на страницу
+  function addMessages(messages) {
+    messages.forEach(function (message) {
+      var username = message.username;
+      var text = message.message;
+      $("#messages").append($("<li>").text(username + ": " + text));
+    });
+  }
+
+  // Обработчик события WebSocket-соединения
+  socket.onopen = function () {
+    $.ajax({
+      url: "/messages/" + room_name + "/",
+      type: "GET",
+      success: function (response) {
+        var messages = response;
+        addMessages(messages);
+      },
+    });
+  };
+
+  // Обработчик события получения сообщения по WebSocket
+  socket.onmessage = function (e) {
+    var data = JSON.parse(e.data);
+    var message = data["message"];
+    var username = data["username"];
+    $("#messages").append($("<li>").text(username + ": " + message));
+  };
+
+  $("#message-input").on("keydown", function (e) {
+    if (e.keyCode === 13) {
+      var messageInputDom = this;
+      var message = messageInputDom.value;
+      var username = $("#username").val();
+      socket.send(JSON.stringify({ message: message, username: username }));
+      messageInputDom.value = "";
+    }
+  });
+
+  $("#send-button").on("click", function () {
+    var messageInputDom = $("#message-input");
+    var message = messageInputDom.val();
+    var username = $("#username").val();
+    socket.send(JSON.stringify({ message: message, username: username }));
+    messageInputDom.val("");
+  });
+});
