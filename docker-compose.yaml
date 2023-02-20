@@ -8,6 +8,7 @@ services:
     ports:
       - 80:80
     volumes:
+      - logs:/code/logs
       - staticdata:/usr/src/app/static_files
     depends_on:
       db:
@@ -46,3 +47,4 @@ volumes:
   postgres_data:
   redis_data:
   staticdata:
+  logs:
