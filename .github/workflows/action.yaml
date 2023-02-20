@@ -55,5 +55,5 @@ jobs:
           password: ${{ secrets.SSH_PASSWORD }}
           script: |
             cd tournament_web
-            docker-compose down
-            docker-compose up -d
+            echo ${{ secrets.SSH_PASSWORD }} | sudo -S docker-compose down
+            echo ${{ secrets.SSH_PASSWORD }} | sudo -S docker-compose up -d
