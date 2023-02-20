@@ -6,12 +6,13 @@ repos:
       - id: end-of-file-fixer
       - id: check-yaml
       - id: debug-statements
+        exclude: asgi\.py$
       - id: name-tests-test
   - repo: https://github.com/myint/autoflake
     rev: v1.4
     hooks:
       - id: autoflake
-        exclude: .*/__init__.py
+        exclude: ^(asgi|.*\/__init__).py$
         args:
           - --in-place
           - --remove-all-unused-imports
@@ -22,13 +23,16 @@ repos:
     rev: v5.4.2
     hooks:
       - id: isort
+        exclude: asgi\.py$
         args: ["--profile", "black"]
   - repo: https://github.com/asottile/add-trailing-comma
     rev: v2.4.0
     hooks:
       - id: add-trailing-comma
+        exclude: asgi\.py$
         args: [--py36-plus]
   - repo: https://github.com/pre-commit/mirrors-autopep8
     rev: v2.0.1
     hooks:
       - id: autopep8
+        exclude: asgi\.py$
