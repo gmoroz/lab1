@@ -5,8 +5,7 @@ ENV PYTHONPATH "${PYTHONPATH}:/"
 
 WORKDIR /code/
 
-RUN mkdir /logs
-RUN touch /logs/debug.log
+RUN mkdir -p /logs && touch /logs/debug.log
 
 RUN pip install poetry
 RUN poetry config virtualenvs.create false
