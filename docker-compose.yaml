@@ -7,6 +7,8 @@ services:
       .env.docker
     ports:
       - 80:80
+    volumes:
+      - staticdata:/usr/src/app/static_files
     depends_on:
       db:
         condition: service_healthy
@@ -33,7 +35,14 @@ services:
     volumes:
       - redis_data:/data
 
+  nginx:
+    image: nginx:latest
+    ports:
+      - "3000:3000"
+    depends_on:
+      - web
 
 volumes:
   postgres_data:
   redis_data:
+  staticdata:
