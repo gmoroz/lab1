@@ -1,28 +1,38 @@
 {% extends "base.html" %}
-{% block title %}Выбор чата{% endblock %}
 {% load static %}
-{% block styles %}
-{{ block.super }}
-<link rel="stylesheet" type="text/css" href="{% static 'css/select_chat.css' %}" />
-{% endblock %}
-{% block content %}
-  <div class="chat-container">
-    <form id="chat-form" class="chat-form">
-      <label for="room-name" class="form-label">Введите название чата</label>
-      <input type="text" id="room-name" name="room-name" class="form-input" required>
-      <button type="submit" id="submit-btn" class="form-button">Войти</button>
-    </form>
-  </div>
-{% endblock %}
-
-{% block scripts %}
-{{ block.super }}
-  <script>
-    const form = document.querySelector('#chat-form');
-    form.addEventListener('submit', (event) => {
-      event.preventDefault();
-      const roomName = document.querySelector('#room-name').value;
-      window.location.href = `/chat/${roomName}`;
-    });
-  </script>
+{% block title %}Выбор чата{% endblock %}
+{% block styles %} {{ block.super }}
+<link
+  rel="stylesheet"
+  type="text/css"
+  href="{% static 'css/select_chat.css' %}"
+/>
+{% endblock %} {% block content %}
+<div class="chat-container">
+  <form id="chat-form" class="chat-form">
+    <label for="room-name" class="form-label">Введите название чата</label>
+    <input
+      type="text"
+      id="room-name"
+      name="room-name"
+      class="form-input"
+      required
+    />
+    <button type="submit" id="submit-btn" class="form-button">Войти</button>
+  </form>
+</div>
+{% endblock %} {% block scripts %} {{ block.super }}
+<script>
+  const form = document.querySelector("#chat-form");
+  form.addEventListener("submit", (event) => {
+    event.preventDefault();
+    const roomName = document.querySelector("#room-name").value;
+    const regex = /^[a-zA-Z0-9]+$/;
+    if (!regex.test(roomName)) {
+      alert("Название комнаты может содержать только цифры и латиницу.");
+      return;
+    }
+    window.location.href = `/chat/${roomName}`;
+  });
+</script>
 {% endblock %}
