@@ -11,13 +11,38 @@ $(document).ready(function () {
   form.submit(function (event) {
     // Отменяем действие по умолчанию браузера
     event.preventDefault();
-
     // Получаем данные из полей формы
     const date = dateField.val();
     const team1 = team1Field.val();
     const team2 = team2Field.val();
     const judge = judgeField.val();
     const result = resultField.val();
+
+    // Проверяем, что команды не одинаковые
+    if (team1 === team2) {
+      alert("Нельзя выбрать две одинаковые команды.");
+      return;
+    }
+
+    // Проверяем, что дата не в будущем и если так, то результат должен быть пустым
+    const today = new Date().toISOString().slice(0, 10);
+    if (date > today && result !== "") {
+      alert("Нельзя поставить результат для матча в будущем!");
+      return;
+    }
+    // Проверяем, что результат задан в формате "число-число"
+    const regexResult = /^\d+-\d+$/;
+    if (result !== "" && !regexResult.test(result)) {
+      alert('Результат должен быть в формате "число-число".');
+      return;
+    }
+
+    // Проверяем, что в имени судьи только буквы и пробелы
+    const regexJudge = /^[a-zA-Zа-яА-Я ]+$/;
+    if (!regexJudge.test(judge)) {
+      alert("В имени судьи должны быть только буквы.");
+      return;
+    }
 
     // Получаем токен
     const csrfToken = $("[name=csrfmiddlewaretoken]").val();
@@ -34,7 +59,7 @@ $(document).ready(function () {
         date_of_the_match: date,
         teams: [team1, team2],
         main_judge: judge,
-        result: result | null,
+        result: result || null,
       }),
       success: function () {
         alert("Матч успешно создан!");
