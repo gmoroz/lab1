@@ -51,6 +51,7 @@
       id="result"
       name="result"
       value="{{ game.result|default:'' }}"
+      placeholder="0-0"
       {% if not user.is_staff %} disabled {% endif %}
     />
     <button type="submit" id="save-btn" {% if not user.is_staff %} hidden {% endif %}>Сохранить</button>
