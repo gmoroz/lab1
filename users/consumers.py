@@ -5,7 +5,7 @@ from channels.db import database_sync_to_async
 from channels.generic.websocket import AsyncWebsocketConsumer
 from django.contrib.auth.models import User
 
-from .models import ChatMessage
+from .models import Message
 
 
 class ChatRoomConsumer(AsyncWebsocketConsumer):
@@ -23,12 +23,12 @@ class ChatRoomConsumer(AsyncWebsocketConsumer):
 
     async def receive(self, text_data):
         text_data_json = json.loads(text_data)
-        message = text_data_json["message"]
+        text = text_data_json["message"]
         username = self.scope["user"].username
         user = await database_sync_to_async(User.objects.get)(username=username)
 
-        await sync_to_async(ChatMessage.objects.create)(
-            message=message, user=user, room=self.room_name,
+        await sync_to_async(Message.objects.create)(
+            text=text, user=user, chat=self.room_name,
         )
 
         # Send message to room group
@@ -36,7 +36,7 @@ class ChatRoomConsumer(AsyncWebsocketConsumer):
             self.room_group_name,
             {
                 "type": "chat_message",
-                "message": message,
+                "message": text,
                 "username": username,
             },
         )
