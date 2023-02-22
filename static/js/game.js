@@ -60,6 +60,7 @@ form.submit(function (event) {
     .done(function (data) {
       console.log("Success:", data);
       alert("Игра обновлена успешно!");
+      window.location.replace("/games/");
     })
     .fail(function (jqXHR, textStatus, errorThrown) {
       console.error("Error:", textStatus, errorThrown);
