@@ -70,7 +70,8 @@ class ChatViewSet(ModelViewSet):
     serializer_class = ChatSerializer
 
     def retrieve(self, request, *args, **kwargs):
-        chat = self.get_object()
+        name = kwargs.get("name")
+        chat = Chat.objects.get(name=name)
         serializer = self.get_serializer(chat)
         messages = serializer.data["messages"]
         return Response(messages)
