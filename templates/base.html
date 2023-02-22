@@ -108,8 +108,29 @@
             <li class="nav-item">
               <a class="nav-link" href="{% url 'table' %}">Таблица</a>
             </li>
-            <li class="nav-item">
-              <a class="nav-link" href="{% url 'chat' %}">Чат</a>
+            <li class="nav-item dropdown">
+              <div class="dropdown">
+                <a
+                  class="nav-link dropdown-toggle"
+                  href="#"
+                  id="gamesDropdown"
+                  role="button"
+                  data-bs-toggle="dropdown"
+                  aria-expanded="false"
+                >
+                  Чаты
+                </a>
+                <ul class="dropdown-menu" aria-labelledby="gamesDropdown">
+                  <li>
+                    <a class="dropdown-item" href="{% url 'chat' %}">Создать чат</a>
+                  </li>
+                  <li>
+                    <a class="dropdown-item" href="{% url 'chats' %}"
+                      >Список чатов</a
+                    >
+                  </li>
+                </ul>
+              </div>
             </li>
           </ul>
           <ul class="navbar-nav ml-auto">
