@@ -2,7 +2,7 @@ import logging
 from typing import Any
 
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.shortcuts import redirect, render
+from django.shortcuts import render
 from django.views.generic import TemplateView
 from rest_framework.viewsets import ModelViewSet
 
@@ -36,10 +36,6 @@ class GameViewSet(LoginRequiredMixin, ModelViewSet):
         instance = self.get_object()
         teams = Team.objects.all()
         return render(request, "games/game.html", {"game": instance, "teams": teams})
-
-    def create(self, request, *args, **kwargs):
-        super().create(request, *args, **kwargs)
-        return redirect("/games/")
 
 
 class TournamentView(LoginRequiredMixin, TemplateView):
@@ -75,10 +71,6 @@ class TeamViewSet(LoginRequiredMixin, ModelViewSet):
             },
         )
 
-    def create(self, request, *args, **kwargs):
-        super().create(request, *args, **kwargs)
-        return redirect("/teams/")
-
 
 class TeamFormViewForCreate(LoginRequiredMixin, TemplateView):
     template_name = "teams/team_create.html"
@@ -109,7 +101,3 @@ class TitleViewSet(LoginRequiredMixin, ModelViewSet):
     def retrieve(self, request, *args, **kwargs):
         instance = self.get_object()
         return render(request, "titles/title.html", {"title": instance})
-
-    def create(self, request, *args, **kwargs):
-        super().create(request, *args, **kwargs)
-        return redirect("/titles/")
