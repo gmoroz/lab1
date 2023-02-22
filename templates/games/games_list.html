@@ -28,7 +28,7 @@
           Подробнее
         </button>
         {% csrf_token %}
-        <button class="delete-button" data-game-id="{{ game.id }}" {% if not user.is_staff %} hidden {% endif %}>
+        <button class="delete-button" data-game-id="{{ game.id }}" {% if not user.is_staff  and game.user_id != request.user.id %} hidden {% endif %}>
           Удалить
         </button>
       </td>
