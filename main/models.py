@@ -4,7 +4,7 @@ from django.db import models
 
 class Title(models.Model):
     name = models.CharField(max_length=255)
-    user_id = models.ForeignKey(User, on_delete=models.CASCADE, default=1)
+    user = models.ForeignKey(User, on_delete=models.CASCADE, default=1)
 
 
 class Team(models.Model):
@@ -15,7 +15,7 @@ class Team(models.Model):
     coach = models.CharField(max_length=255)
     points = models.PositiveIntegerField()
     games_count = models.PositiveIntegerField()
-    user_id = models.ForeignKey(User, on_delete=models.CASCADE, default=1)
+    user = models.ForeignKey(User, on_delete=models.CASCADE, default=1)
 
 
 class Calendar(models.Model):
@@ -23,7 +23,7 @@ class Calendar(models.Model):
     teams = models.ManyToManyField("Team")
     main_judge = models.CharField(max_length=100)
     result = models.CharField(max_length=5, null=True, default=None)
-    user_id = models.ForeignKey(User, on_delete=models.CASCADE, default=1)
+    user = models.ForeignKey(User, on_delete=models.CASCADE, default=1)
 
 
 # Команда название, страна, город, титулы, тренер.
