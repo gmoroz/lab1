@@ -7,7 +7,7 @@
 <form id="team-form">
   {% csrf_token %}
   <label for="name">Название команды:</label>
-  <input type="text" id="name" name="name" value="{{ team.name }}" {% if not user.is_staff %} disabled {% endif %}/><br />
+  <input type="text" id="name" name="name" value="{{ team.name }}" {% if not user.is_staff and team.user_id != request.user.id %} disabled {% endif %}/><br />
 
   <label for="country">Страна:</label>
   <input
@@ -15,14 +15,14 @@
     id="country"
     name="country"
     value="{{ team.country }}"
-    {% if not user.is_staff %} disabled {% endif %}
+    {% if not user.is_staff and team.user_id != request.user.id %} disabled {% endif %}
   /><br />
 
   <label for="city">Город:</label>
-  <input type="text" id="city" name="city" value="{{ team.city }}" {% if not user.is_staff %} disabled {% endif %}/><br />
+  <input type="text" id="city" name="city" value="{{ team.city }}" {% if not user.is_staff and team.user_id != request.user.id %} disabled {% endif %}/><br />
 
   <label for="coach">Тренер:</label>
-  <input type="text" id="coach" name="coach" value="{{ team.coach }}" {% if not user.is_staff %} disabled {% endif %}/><br />
+  <input type="text" id="coach" name="coach" value="{{ team.coach }}" {% if not user.is_staff and team.user_id != request.user.id %} disabled {% endif %}/><br />
 
   <label for="points">Очки:</label>
   <input
@@ -30,7 +30,7 @@
     id="points"
     name="points"
     value="{{ team.points }}"
-    {% if not user.is_staff %} disabled {% endif %}
+    {% if not user.is_staff and team.user_id != request.user.id %} disabled {% endif %}
   /><br />
 
   <label for="games-count">Количество игр:</label>
@@ -39,7 +39,7 @@
     id="games-count"
     name="games_count"
     value="{{ team.games_count }}"
-    {% if not user.is_staff %} disabled {% endif %}
+    {% if not user.is_staff and team.user_id != request.user.id %} disabled {% endif %}
   /><br />
 
   <label for="titles">Титулы:</label>
@@ -51,7 +51,7 @@
         name="titles"
         value="{{ title.id }}"
         {% if title in team.titles.all %}checked{% endif %}
-        {% if not user.is_staff %} disabled {% endif %}
+        {% if not user.is_staff and team.user_id != request.user.id %} disabled {% endif %}
       />
       {{ title.name }} </label
     ><br />
@@ -59,7 +59,7 @@
   </div>
   <br />
 
-  <input type="submit" value="Сохранить" {% if not user.is_staff %} hidden {% endif %}/>
+  <input type="submit" value="Сохранить" {% if not user.is_staff and team.user_id != request.user.id %} hidden {% endif %}/>
 </form>
 {% endblock %} {% block scripts %}
 {{ block.super }}<script src="{% static 'js/team.js' %}"></script> {% endblock %}

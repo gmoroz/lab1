@@ -66,6 +66,7 @@ $(document).ready(function () {
       },
       success: function (response) {
         alert("Команда успешно сохранена!");
+        window.location.replace("/teams/");
       },
       error: function (response) {
         alert("Произошла ошибка при сохранении команды");
