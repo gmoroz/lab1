@@ -5,9 +5,7 @@ $(document).ready(function () {
 
   // Обработчик события нажатия на кнопку сохранения
   $saveBtn.on("click", function (e) {
-    e.preventDefault(); // Отменяем стандартное действие кнопки
-
-    // Получаем данные формы
+    e.preventDefault(); // Отменяем стандартное действие кнопки// Получаем данные формы
     const titleName = $("#name").val();
 
     // Проверяем, что titleName состоит только из букв и пробелов
@@ -23,9 +21,13 @@ $(document).ready(function () {
             .val(), // Получаем CSRF-токен из скрытого поля формы
         },
         data: JSON.stringify({ name: titleName }),
-        success: function (data) {
+        success: function (data, status, xhr) {
           console.log("Data saved:", data);
-          // Дополнительные действия после успешного сохранения
+          // Проверяем код статуса ответа
+          if (xhr.status === 201) {
+            alert("Титул успешно создан");
+            window.location.href = "/titles/"; // Перенаправляем пользователя на /titles/
+          }
         },
         error: function (xhr, status, error) {
           console.error("Error saving data:", error);
