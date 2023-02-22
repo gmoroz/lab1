@@ -8,7 +8,7 @@ class TitleSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Title
-        fields = ["user_id", "name"]
+        fields = "__all__"
 
 
 class TeamSerializer(serializers.ModelSerializer):
