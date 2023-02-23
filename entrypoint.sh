@@ -1,4 +1,5 @@
 python manage.py migrate
+python manage.py loaddata main/fixtures/users.json
 python manage.py loaddata main/fixtures/titles.json
 python manage.py loaddata main/fixtures/teams.json
 python manage.py loaddata main/fixtures/calendar.json
