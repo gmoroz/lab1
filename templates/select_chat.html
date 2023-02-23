@@ -10,6 +10,7 @@
 {% endblock %} {% block content %}
 <div class="chat-container">
   <form id="chat-form" class="chat-form">
+    {% csrf_token %}
     <label for="room-name" class="form-label">Введите название чата</label>
     <input
       type="text"
@@ -18,21 +19,10 @@
       class="form-input"
       required
     />
+    <input type="text" id="username" class="username" hidden value="{{ request.user.username }}">
     <button type="submit" id="submit-btn" class="form-button">Войти</button>
   </form>
 </div>
 {% endblock %} {% block scripts %} {{ block.super }}
-<script>
-  const form = document.querySelector("#chat-form");
-  form.addEventListener("submit", (event) => {
-    event.preventDefault();
-    const roomName = document.querySelector("#room-name").value;
-    const regex = /^[a-zA-Z0-9]+$/;
-    if (!regex.test(roomName)) {
-      alert("Название комнаты может содержать только цифры и латиницу.");
-      return;
-    }
-    window.location.href = `/chat/${roomName}`;
-  });
-</script>
+<script src="{% static 'js/select_chat.js' %}"></script>
 {% endblock %}
