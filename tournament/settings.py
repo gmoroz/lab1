@@ -159,34 +159,32 @@ if not DEBUG:
         "version": 1,
         "disable_existing_loggers": False,
         "handlers": {
-            "file": {
-                "level": "DEBUG",
+            "debug_file": {
                 "class": "logging.handlers.RotatingFileHandler",
                 "filename": "logs/debug.log",
-                "maxBytes": 1024 * 1024 * 5,  # 5 MB
-                "backupCount": 5,
-                "formatter": "custom",
-            },
-        },
-        "formatters": {
-            "custom": {
-                "format": "{levelname} {asctime} {module} {process:d} {thread:d} {message}",
-                "style": "{",
+                "maxBytes": 200000000,  # 200 MB
+                "backupCount": 10,
             },
         },
         "loggers": {
-            "django": {
+            "django.db.backends": {
+                "handlers": ["debug_file"],
                 "level": "DEBUG",
-                "handlers": ["file"],
                 "propagate": False,
             },
-            "": {
-                "handlers": ["file"],
-                "level": "ERROR",
+            "django.request": {
+                "handlers": ["debug_file"],
+                "level": "DEBUG",
+                "propagate": False,
+            },
+            "django": {
+                "handlers": ["debug_file"],
+                "level": "INFO",
                 "propagate": False,
             },
         },
     }
+
 ASGI_APPLICATION = "tournament.asgi.application"
 CHANNEL_LAYERS = {
     "default": {

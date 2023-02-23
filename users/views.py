@@ -1,3 +1,4 @@
+import logging
 from typing import Any
 
 from django.contrib.auth import authenticate, login, logout
@@ -10,6 +11,8 @@ from rest_framework.viewsets import ModelViewSet
 
 from .models import Chat
 from .serializers import ChatSerializer, MessageSerializer
+
+logger = logging.getLogger(__name__)
 
 
 def login_view(request):
