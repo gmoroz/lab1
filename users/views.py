@@ -5,7 +5,6 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.models import User
 from django.shortcuts import redirect, render
 from django.views.generic import TemplateView
-from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.viewsets import ModelViewSet
 
@@ -71,6 +70,7 @@ class ChatViewSet(ModelViewSet):
     serializer_class = ChatSerializer
     lookup_field = "name"
     lookup_value_regex = "[^/]+"
+    template_name = "chats.html"
 
     def retrieve(self, request, *args, **kwargs):
         name = kwargs.get("name")
@@ -79,19 +79,18 @@ class ChatViewSet(ModelViewSet):
         serialized_messages = MessageSerializer(messages, many=True).data
         return Response([msg for msg in serialized_messages])
 
-    def update(self, request, *args, **kwargs):
-        chat = self.get_object()
-        text = request.data.get("text")
-        username = request.data.get("username")
-        user = User.objects.get(username=username)
-        chat.messages.create(text=text, user=user)
-        return Response(status=status.HTTP_204_NO_CONTENT)
-
     def create(self, request, *args, **kwargs):
         username = request.data.get("username")
         user = User.objects.get(username=username)
         name = request.data.get("name")
         if (chat := Chat.objects.filter(name=name).first()) is None:
-            chat = Chat.objects.create(name=name, user=user)
+            chat = Chat.objects.create(name=name, creator=user)
         serialized_chat = self.serializer_class(chat).data
         return Response({"chat": serialized_chat})
+
+    def list(self, request, *args, **kwargs):
+        return render(
+            request,
+            self.template_name,
+            {"chats": self.queryset.order_by("-created_at")},
+        )
