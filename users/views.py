@@ -26,14 +26,13 @@ def login_view(request):
             return redirect("main")
         else:
             error = "Неправильный логин или пароль."
-    else:
-        return render(
-            request,
-            "login.html",
-            {
-                "error": error,
-            },
-        )
+    return render(
+        request,
+        "login.html",
+        {
+            "error": error,
+        },
+    )
 
 
 def logout_view(request):
