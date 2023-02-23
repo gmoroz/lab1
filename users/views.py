@@ -74,15 +74,24 @@ class ChatViewSet(ModelViewSet):
 
     def retrieve(self, request, *args, **kwargs):
         name = kwargs.get("name")
-        chat, _ = Chat.objects.get_or_create(name=name)
-        messages = chat.messages.all()
+        chat = Chat.objects.get(name=name)
+        messages = chat.messages.order_by("created_at").all()
         serialized_messages = MessageSerializer(messages, many=True).data
-        return Response({"messages": serialized_messages})
+        return Response([msg for msg in serialized_messages])
 
     def update(self, request, *args, **kwargs):
         chat = self.get_object()
-        text = kwargs.get("text")
-        username = kwargs.get("username")
+        text = request.data.get("text")
+        username = request.data.get("username")
         user = User.objects.get(username=username)
         chat.messages.create(text=text, user=user)
         return Response(status=status.HTTP_204_NO_CONTENT)
+
+    def create(self, request, *args, **kwargs):
+        username = request.data.get("username")
+        user = User.objects.get(username=username)
+        name = request.data.get("name")
+        if (chat := Chat.objects.filter(name=name).first()) is None:
+            chat = Chat.objects.create(name=name, user=user)
+        serialized_chat = self.serializer_class(chat).data
+        return Response({"chat": serialized_chat})
