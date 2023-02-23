@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block styles %}
+{{ block.super }}
+<link rel="stylesheet" type="text/css" href="{% static 'css/chats.css' %}" />
+{% endblock %}
+{% block title %}
+    Chat List
+{% endblock %}
+
+{% block content %}
+    <div class="chat-list">
+        {% for chat in chats %}
+            <div class="chat">
+                <div class="chat-name">{{ chat.name }}</div>
+                <div class="chat-creator">Создатель: {{ chat.creator }}</div>
+                <div class="chat-created-at">Дата создания: {{ chat.created_at|date:'d/m/Y H:i' }}</div>
+                <button class="btns btn-green btn-chat" data-name="{{ chat.name }}">Перейти в чат</button>
+                {% csrf_token %}
+                <button class="btns btn-red btn-delete" data-name="{{ chat.name }}" data-creator="{{ chat.creator }}"
+                {% if not user.is_staff  and chat.creator_id != request.user.id %} hidden {% endif %}
+                >Удалить чат</button>
+            </div>
+        {% endfor %}
+    </div>
+{% endblock %}
+{% block scripts %}
+{{ block.super }}
+<script src="{% static 'js/chats.js' %}"></script>
+{% endblock %}

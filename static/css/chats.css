@@ -1,0 +1,45 @@
+.chat-list {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+}
+
+.chat {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    border: 1px solid black;
+    padding: 10px;
+    width: 400px;
+}
+
+.chat-name {
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.chat-creator {
+    font-size: 16px;
+}
+
+.chat-created-at {
+    font-size: 16px;
+}
+
+.btns {
+    border-radius: 5px;
+    padding: 10px 20px;
+    cursor: pointer;
+}
+
+.btn-green {
+    background-color: green;
+    color: white;
+}
+
+.btn-red {
+    background-color: red;
+    color: white;
+}
