@@ -154,38 +154,39 @@ SESSION_ENGINE = "django.contrib.sessions.backends.db"
 LOGIN_URL = "/login/"
 LOGIN_REDIRECT_URL = "/login/"
 
-LOGGING = {
-    "version": 1,
-    "disable_existing_loggers": False,
-    "handlers": {
-        "file": {
-            "level": "DEBUG",
-            "class": "logging.handlers.RotatingFileHandler",
-            "filename": "logs/debug.log",
-            "maxBytes": 1024 * 1024 * 5,  # 5 MB
-            "backupCount": 5,
-            "formatter": "custom",
+if not DEBUG:
+    LOGGING = {
+        "version": 1,
+        "disable_existing_loggers": False,
+        "handlers": {
+            "file": {
+                "level": "DEBUG",
+                "class": "logging.handlers.RotatingFileHandler",
+                "filename": "logs/debug.log",
+                "maxBytes": 1024 * 1024 * 5,  # 5 MB
+                "backupCount": 5,
+                "formatter": "custom",
+            },
         },
-    },
-    "formatters": {
-        "custom": {
-            "format": "{levelname} {asctime} {module} {process:d} {thread:d} {message}",
-            "style": "{",
+        "formatters": {
+            "custom": {
+                "format": "{levelname} {asctime} {module} {process:d} {thread:d} {message}",
+                "style": "{",
+            },
         },
-    },
-    "loggers": {
-        "django": {
-            "level": "DEBUG",
-            "handlers": ["file"],
-            "propagate": False,
+        "loggers": {
+            "django": {
+                "level": "DEBUG",
+                "handlers": ["file"],
+                "propagate": False,
+            },
+            "": {
+                "handlers": ["file"],
+                "level": "ERROR",
+                "propagate": False,
+            },
         },
-        "": {
-            "handlers": ["file"],
-            "level": "ERROR",
-            "propagate": False,
-        },
-    },
-}
+    }
 ASGI_APPLICATION = "tournament.asgi.application"
 CHANNEL_LAYERS = {
     "default": {
