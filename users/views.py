@@ -5,11 +5,12 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.models import User
 from django.shortcuts import redirect, render
 from django.views.generic import TemplateView
+from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.viewsets import ModelViewSet
 
 from .models import Chat
-from .serializers import ChatSerializer
+from .serializers import ChatSerializer, MessageSerializer
 
 
 def login_view(request):
@@ -68,10 +69,20 @@ class RoomView(LoginRequiredMixin, TemplateView):
 class ChatViewSet(ModelViewSet):
     queryset = Chat.objects.all()
     serializer_class = ChatSerializer
+    lookup_field = "name"
+    lookup_value_regex = "[^/]+"
 
     def retrieve(self, request, *args, **kwargs):
         name = kwargs.get("name")
-        chat = Chat.objects.get(name=name)
-        serializer = self.get_serializer(chat)
-        messages = serializer.data["messages"]
-        return Response(messages)
+        chat, _ = Chat.objects.get_or_create(name=name)
+        messages = chat.messages.all()
+        serialized_messages = MessageSerializer(messages, many=True).data
+        return Response({"messages": serialized_messages})
+
+    def update(self, request, *args, **kwargs):
+        chat = self.get_object()
+        text = kwargs.get("text")
+        username = kwargs.get("username")
+        user = User.objects.get(username=username)
+        chat.messages.create(text=text, user=user)
+        return Response(status=status.HTTP_204_NO_CONTENT)

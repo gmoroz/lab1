@@ -18,7 +18,4 @@ urlpatterns = [
         name="chat",
     ),
     path("", include(router.urls)),
-    path(
-        "chat/<str:name>/", ChatViewSet.as_view({"get": "retrieve"}), name="chat-detail",
-    ),
 ]
