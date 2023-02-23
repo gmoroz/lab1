@@ -20,19 +20,20 @@ def login_view(request):
         username = request.POST.get("username")
         password = request.POST.get("password")
         user = authenticate(request, username=username, password=password)
+        error = None
         if user is not None:
             login(request, user)
             return redirect("main")
         else:
-            return render(
-                request,
-                "login.html",
-                {
-                    "error": "Неправильный логин или пароль.",
-                },
-            )
+            error = "Неправильный логин или пароль."
     else:
-        return render(request, "login.html")
+        return render(
+            request,
+            "login.html",
+            {
+                "error": error,
+            },
+        )
 
 
 def logout_view(request):
@@ -56,7 +57,7 @@ def register_view(request):
         User.objects.create_user(username, password=password)
         return redirect("login")
 
-    return render(request, "register.html")
+    return render(request, "register.html", {"error": None})
 
 
 class RoomView(LoginRequiredMixin, TemplateView):
