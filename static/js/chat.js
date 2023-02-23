@@ -1,54 +1,50 @@
-$(function () {
+$(document).ready(function () {
   var url = window.location.href;
   var room_name = url.match(/\/chat\/(.*)\//)[1];
-  var socket = new WebSocket(
-    "ws://" + window.location.host + "/ws/chat/" + room_name + "/"
-  );
+  const username = $("#username").val();
+  const messages = $("#messages");
 
-  // Функция для добавления сообщений на страницу
-  function addMessages(messages) {
-    messages.forEach(function (message) {
-      var username = message.username;
-      var text = message.message;
-      $("#messages").append($("<li>").text(username + ": " + text));
+  // Функция для получения списка сообщений по AJAX-запросу
+  function getMessages() {
+    $.ajax({
+      url: `/chats/${room_name}/`,
+      type: "GET",
+      success: function (response) {
+        messages.empty();
+        response.forEach((message) => {
+          messages.append(`<li>${message.user}: ${message.text}</li>`);
+        });
+      },
     });
   }
 
-  // Обработчик события WebSocket-соединения
-  socket.onopen = function () {
+  // Получаем список сообщений при загрузке страницы
+  getMessages();
+
+  // Обработчик события отправки нового сообщения
+  $("#send-button").click(function () {
+    const text = $("#message-input").val();
     $.ajax({
-      url: "/messages/" + room_name + "/",
-      type: "GET",
-      success: function (response) {
-        var messages = response;
-        addMessages(messages);
+      url: `/chats/${room_name}/`,
+      type: "PUT",
+      data: {
+        text: text,
+        username: username,
+      },
+      success: function () {
+        $("#message-input").val("");
+        getMessages();
       },
     });
-  };
-
-  // Обработчик события получения сообщения по WebSocket
-  socket.onmessage = function (e) {
-    var data = JSON.parse(e.data);
-    var message = data["message"];
-    var username = data["username"];
-    $("#messages").append($("<li>").text(username + ": " + message));
-  };
-
-  $("#message-input").on("keydown", function (e) {
-    if (e.keyCode === 13) {
-      var messageInputDom = this;
-      var message = messageInputDom.value;
-      var username = $("#username").val();
-      socket.send(JSON.stringify({ message: message, username: username }));
-      messageInputDom.value = "";
-    }
   });
 
-  $("#send-button").on("click", function () {
-    var messageInputDom = $("#message-input");
-    var message = messageInputDom.val();
-    var username = $("#username").val();
-    socket.send(JSON.stringify({ message: message, username: username }));
-    messageInputDom.val("");
-  });
+  // WebSocket-соединение для получения новых сообщений
+  const chatSocket = new WebSocket(
+    "ws://" + window.location.host + `/ws/chat/${room_name}/`
+  );
+
+  chatSocket.onmessage = function (event) {
+    const message = JSON.parse(event.data);
+    messages.append(`<li>${message.username}: ${message.text}</li>`);
+  };
 });
