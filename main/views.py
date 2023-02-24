@@ -2,7 +2,8 @@ import logging
 from typing import Any
 
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.shortcuts import render
+from django.shortcuts import redirect, render
+from django.urls import reverse
 from django.views.generic import TemplateView
 from rest_framework.viewsets import ModelViewSet
 
@@ -70,6 +71,10 @@ class TeamViewSet(LoginRequiredMixin, ModelViewSet):
                 "all_titles": titles,
             },
         )
+
+    def create(self, request, *args, **kwargs):
+        super().create(request, *args, **kwargs)
+        return redirect(reverse("teams-list"))
 
 
 class TeamFormViewForCreate(LoginRequiredMixin, TemplateView):

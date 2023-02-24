@@ -10,6 +10,8 @@ $(document).ready(function () {
     var regexLetters = /^[a-zA-Zа-яА-ЯёЁ ]+$/;
     var regexNumbers = /^[0-9]+$/;
 
+    var titlesSelected = $("input[name='titles']:checked").length;
+
     if (!regexLetters.test(name)) {
       alert("В названии команды могут быть только буквы!");
       event.preventDefault();
@@ -35,6 +37,12 @@ $(document).ready(function () {
         "Количество игр может быть только положительным целым числом или нулем!"
       );
       event.preventDefault();
+    }
+    if (titlesSelected < 1) {
+      alert("Выберите хотя бы один титул!");
+      event.preventDefault();
+    } else {
+      window.location.replace("/teams/");
     }
   });
 });
