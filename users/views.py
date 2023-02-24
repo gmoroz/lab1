@@ -44,11 +44,7 @@ def register_view(request):
     if request.method == "POST":
         username = request.POST["username"]
         password = request.POST["password"]
-        confirm_password = request.POST["confirm_password"]
 
-        if password != confirm_password:
-            error = "Пароли не совпадают"
-            return render(request, "register.html", {"error": error})
         if User.objects.filter(username=username).first():
             error = "Пользователь с таким именем уже существует!"
             return render(request, "register.html", {"error": error})
@@ -56,7 +52,7 @@ def register_view(request):
         User.objects.create_user(username, password=password)
         return redirect("login")
 
-    return render(request, "register.html", {"error": None})
+    return render(request, "register.html", {"error": ""})
 
 
 class RoomView(LoginRequiredMixin, TemplateView):

@@ -40,9 +40,8 @@
     </form>
     <br />
     <a href="{% url 'login' %}">Уже зарегистрированы? Войти</a>
-    {% if error %}
-    <script>
-      alert("{{ error }}");
-    </script>{% endif %}
+    <input type="text" class="error" id="error" hidden value="{{ error }}">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="{% static 'js/register.js' %}"></script>
   </body>
 </html>
