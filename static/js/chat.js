@@ -35,6 +35,11 @@ $(function () {
     var messageInput = $("#message-input");
     var messageText = messageInput.val().trim();
     if (messageText) {
+      var messageRegex = /^[a-zA-Zа-яА-Я0-9\s.,?!]+$/g;
+      if (!messageRegex.test(messageText)) {
+        alert("Текст сообщения содержит недопустимые символы!");
+        return;
+      }
       var data = {
         text: messageText,
       };
