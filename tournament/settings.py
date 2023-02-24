@@ -154,36 +154,37 @@ SESSION_ENGINE = "django.contrib.sessions.backends.db"
 LOGIN_URL = "/login/"
 LOGIN_REDIRECT_URL = "/login/"
 
-if not DEBUG:
-    LOGGING = {
-        "version": 1,
-        "disable_existing_loggers": False,
-        "handlers": {
-            "debug_file": {
-                "class": "logging.handlers.RotatingFileHandler",
-                "filename": "logs/debug.log",
-                "maxBytes": 200000000,  # 200 MB
-                "backupCount": 10,
-            },
+
+LOGGING = {
+    "version": 1,
+    "filters": {
+        "require_debug_true": {
+            "()": "django.utils.log.RequireDebugTrue",
         },
-        "loggers": {
-            "django.db.backends": {
-                "handlers": ["debug_file"],
-                "level": "DEBUG",
-                "propagate": False,
-            },
-            "django.request": {
-                "handlers": ["debug_file"],
-                "level": "DEBUG",
-                "propagate": False,
-            },
-            "django": {
-                "handlers": ["debug_file"],
-                "level": "INFO",
-                "propagate": False,
-            },
+    },
+    "handlers": {
+        "debug_file": {
+            "class": "logging.handlers.RotatingFileHandler",
+            "filename": "logs/debug.log",
+            "maxBytes": 200000000,  # 200 MB
+            "backupCount": 10,
+            "formatter": "verbose",
         },
-    }
+    },
+    "loggers": {
+        "django": {
+            "level": "DEBUG",
+            "handlers": ["debug_file"],
+        },
+    },
+    "formatters": {
+        "verbose": {
+            "format": "%(asctime)s [%(levelname)s] %(message)s",
+            "datefmt": "%Y-%m-%d %H:%M:%S",
+        },
+    },
+}
+
 
 ASGI_APPLICATION = "tournament.asgi.application"
 CHANNEL_LAYERS = {
