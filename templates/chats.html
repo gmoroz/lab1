@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
 {% load static %}
+{% load tz %}
 {% block styles %}
 {{ block.super }}
 <link rel="stylesheet" type="text/css" href="{% static 'css/chats.css' %}" />
@@ -14,7 +15,7 @@
             <div class="chat">
                 <div class="chat-name">{{ chat.name }}</div>
                 <div class="chat-creator">Создатель: {{ chat.creator }}</div>
-                <div class="chat-created-at">Дата создания: {{ chat.created_at|timezone('Europe/Moscow')|date:'d/m/Y H:i' }}</div>
+                <div class="chat-created-at">Дата создания: {{ chat.created_at|timezone:"Europe/Moscow"|date:"d/m/Y H:i" }}</div>
                 <button class="btns btn-green btn-chat" data-name="{{ chat.name }}">Перейти в чат</button>
                 {% csrf_token %}
                 <button class="btns btn-red btn-delete" data-name="{{ chat.name }}" data-creator="{{ chat.creator }}"
